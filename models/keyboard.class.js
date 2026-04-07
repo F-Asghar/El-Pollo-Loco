@@ -49,5 +49,13 @@ export class Keyboard {
             if (e.target.id === "btn-right") Keyboard.RIGHT = false;
             if (e.target.id === "btn-throw") Keyboard.D = false;
         });
+
+        window.addEventListener("pointercancel", () => {
+            Keyboard.UP = false;
+            Keyboard.LEFT = false;
+            Keyboard.RIGHT = false;
+            Keyboard.D = false;
+        });
     }
+
 }
