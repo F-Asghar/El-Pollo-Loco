@@ -34,7 +34,7 @@ main{
 #canvas-section {
     position: relative;
     width: 100%;
-    height: 100dvh;
+    /* height: 100dvh; */
     /* display: flex; */
     flex-direction: column;
     align-items: center;
@@ -48,7 +48,7 @@ main{
     justify-content: space-between;
     flex-direction: column;
     width: 100%;
-    height: 480px;
+    height: 100%;
     z-index: 9999;
 }
 
@@ -116,7 +116,6 @@ canvas {
 
 
 .dialog {
-    /* padding: 16px; */
     width: 720px;
     height: 480px;
     background-image: url("./img/start-screen/start-screen.jpg");
