@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -26,19 +26,20 @@
         <main>
             <section id="canvas-section">
                 <canvas id="canvas" width="720" height="480"></canvas>
+
                 <section id="canvas-buttons">
                     <section class="game-buttons">
                         <div id="upper-buttons">
                             <img
                                 id="volume-button"
                                 onclick="volume()"
-                                src="./img/icons/volume.png"
+                                src="./img/icons/mute.png"
                                 alt=""
                             />
                             <img
                                 id="mute-button"
                                 onclick="mute()"
-                                src="./img/icons/mute.png"
+                                src="./img/icons/volume.png"
                                 alt=""
                             />
                             <img
@@ -49,17 +50,18 @@
                             />
                         </div>
                     </section>
-
+                    
                     <section id="control-buttons" class="game-buttons">
                             <div>
-                                <img src="./img/icons/arrow-left.png" alt="" />
-                                <img src="./img/icons/arrow-right.png" alt="" />
+                                <img id="btn-left" src="./img/icons/arrow-left.png" alt="" />
+                                <img id="btn-right" src="./img/icons/arrow-right.png" alt="" />
                             </div>
                             <div>
-                                <img src="./img/icons/arrow-up.png" alt="" />
-                                <img src="./img/icons/bottle.png" alt="" />
+                                <img id="btn-up" src="./img/icons/arrow-up.png" alt="" />
+                                <img id="btn-throw" src="./img/icons/bottle.png" alt="" />
                             </div>
                     </section>
+
                 </section>
             </section>
 

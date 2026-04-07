@@ -23,6 +23,7 @@ window.volume = volume;
 window.finished = finished;
 window.home = home;
 
+
 function init() {
     // world = null funktioniert noch nicht weil noch intervalle laufen!
     world = null;
@@ -37,11 +38,11 @@ function start() {
     start.style.display = "none";
     canvas.style.display = "flex";
     init();
- }
+}
 
- function finished() {
-        if (!Character.alive || !Endboss.alive) {
-            setTimeout(() => {
+function finished() {
+    if (!Character.alive || !Endboss.alive) {
+        setTimeout(() => {
             const start = document.getElementById("start-screen");
             const canvas = document.getElementById("canvas-section");
             start.style.display = "flex";
@@ -49,16 +50,15 @@ function start() {
             Character.alive = true;
             Endboss.alive = true;
             openDialog("restart-home");
-            }, 1000);
-        }
+        }, 1000);
     }
-
+}
 
 function home() {
     // const startRef = document.getElementById("start-screen");
-    const endRef = document.getElementById('restart-home');
-    endRef.close();           
-    endRef.innerHTML = "";    
+    const endRef = document.getElementById("restart-home");
+    endRef.close();
+    endRef.innerHTML = "";
     endRef.style.display = "none";
 }
 
@@ -71,10 +71,10 @@ function openDialog(id) {
     } else if (id == "controls-dialog") {
         const dataRef2 = document.getElementById(id);
         dataRef2.innerHTML += getControlTemplate();
-    } else if (id == "restart-home"){
-      const restartRef = document.getElementById("restart-home");
-      restartRef.innerHTML = getRestartTemplate();
-      restartRef.style.display = "flex";
+    } else if (id == "restart-home") {
+        const restartRef = document.getElementById("restart-home");
+        restartRef.innerHTML = getRestartTemplate();
+        restartRef.style.display = "flex";
     }
 }
 
@@ -108,22 +108,13 @@ function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
     } else if (element.msRequestFullscreen) {
-        // for IE11 (remove June 15, 2022)
         element.msRequestFullscreen();
     } else if (element.webkitRequestFullscreen) {
-        // iOS Safari
         element.webkitRequestFullscreen();
     }
 }
 
-// diese funktion brauchen wir vermutlich nicht (exitfullscreen)
-function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    }
-}
+
 
 // Responsive
 // Zu wenige Hühner
@@ -135,9 +126,8 @@ function exitFullscreen() {
 // Soundhub überprüfen
 // Sound Icon tauschen
 // Impressum Farben anpassen nicht richtig lesbar!
-// Soundicon tauschen
+
 // Restart button
-// Buttons Funktionsfähig machen
 
 // die Welt einen neuen wert zuweisen! leerer Array! und neu erstellen!!
 // es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?

@@ -62,7 +62,7 @@ main{
 }
 
 #control-buttons{
-    display: flex;
+    display: flex; 
     justify-content: space-between;
 }
 

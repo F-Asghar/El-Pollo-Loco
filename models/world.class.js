@@ -93,7 +93,7 @@ export class World {
 
     run = () => {
         // hier starten wir unsere Intervalle 
-        this.checkCollisionsFromTop();
+        // this.checkCollisionsFromTop();
         this.checkCollisions();
         this.checkCollisionsCoins();
         this.checkCollisionsBotle();
@@ -101,7 +101,7 @@ export class World {
         this.checkThrowObjects();
         this.youLost();
         this.youWon();
-        // this.gameFinished();
+        this.gameFinished();
     };
 
     checkThrowObjects = () => {
