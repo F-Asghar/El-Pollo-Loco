@@ -1,5 +1,12 @@
 export function getControlTemplate() {
-    return `<h2 id="headline">Control Settings</h2>
+    return `<div id="close-container">
+            <button
+            onclick="closeDialog('controls-dialog')"
+            id="close-dialog">
+            <p>X</p>
+            </button>
+            </div>
+            <h2 id="headline">Control Settings</h2>
             <h3>Move Left: Arrow Left</h3>
             <h3>Move Right: Arrow Right</h3>
             <h3>Jump: Space</h3>
@@ -30,7 +37,14 @@ export function getRestartTemplate() {
 }
 
 export function getImprintTemplate() {
-    return `<section id="imprint-template">
+    return `<div id="close-container">
+            <button
+            onclick="closeDialog('information-dialog')"
+            id="close-dialog">
+            <p>X</p>
+            </button>
+            </div> 
+            <section id="imprint-template">
             <h2>Impressum</h2>
             <p>
                 Dies ist eine nicht-kommerzielle, rein private

@@ -24,6 +24,7 @@
         </header>
 
         <main>
+            
             <section id="canvas-section">
                 <canvas id="canvas" width="720" height="480"></canvas>
 
@@ -50,20 +51,46 @@
                             />
                         </div>
                     </section>
-                    
-                    <section id="control-buttons" class="game-buttons">
-                            <div>
-                                <img id="btn-left" src="./img/icons/arrow-left.png" alt="" />
-                                <img id="btn-right" src="./img/icons/arrow-right.png" alt="" />
-                            </div>
-                            <div>
-                                <img id="btn-up" src="./img/icons/arrow-up.png" alt="" />
-                                <img id="btn-throw" src="./img/icons/bottle.png" alt="" />
-                            </div>
-                    </section>
 
+                    <section id="control-buttons" class="game-buttons">
+                        <div>
+                            <img
+                                id="btn-left"
+                                src="./img/icons/arrow-left.png"
+                                alt=""
+                            />
+                            <img
+                                id="btn-right"
+                                src="./img/icons/arrow-right.png"
+                                alt=""
+                            />
+                        </div>
+                        <div>
+                            <img
+                                id="btn-up"
+                                src="./img/icons/arrow-up.png"
+                                alt=""
+                            />
+                            <img
+                                id="btn-throw"
+                                src="./img/icons/bottle.png"
+                                alt=""
+                            />
+                        </div>
+                    </section>
                 </section>
+
+                <dialog class="dialog" id="controls-dialog">
+                    <div id="control-data"></div>
+                </dialog>
+
+                <dialog class="dialog" id="information-dialog">
+                    <div id="information-data"></div>
+                </dialog>
+
+                <dialog class="dialog" id="restart-home"></dialog>
             </section>
+            
 
             <section id="start-screen">
                 <div class="home-content">
@@ -98,32 +125,6 @@
                     />
                     <h4>Controls</h4>
                 </div>
-
-                <dialog class="dialog" id="controls-dialog">
-                    <div id="close-container">
-                        <button
-                            onclick="closeDialog('controls-dialog')"
-                            id="close-dialog"
-                        >
-                            <p>X</p>
-                        </button>
-                    </div>
-                    <div id="control-data"></div>
-                </dialog>
-
-                <dialog class="dialog" id="information-dialog">
-                    <div id="close-container">
-                        <button
-                            onclick="closeDialog('information-dialog')"
-                            id="close-dialog"
-                        >
-                            <p>X</p>
-                        </button>
-                    </div>
-                    <div id="information-data"></div>
-                </dialog>
-
-                <dialog class="dialog" id="restart-home"></dialog>
             </section>
         </main>
     </body>

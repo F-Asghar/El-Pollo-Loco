@@ -30,13 +30,14 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
+
 }
 
 function start() {
     const start = document.getElementById("start-screen");
-    const canvas = document.getElementById("canvas-section");
+    const dialogref = document.getElementById("restart-home");
+    dialogref.style.display = "none"
     start.style.display = "none";
-    canvas.style.display = "flex";
     init();
 }
 
@@ -44,18 +45,16 @@ function finished() {
     if (!Character.alive || !Endboss.alive) {
         setTimeout(() => {
             const start = document.getElementById("start-screen");
-            const canvas = document.getElementById("canvas-section");
             start.style.display = "flex";
-            canvas.style.display = "none";
             Character.alive = true;
             Endboss.alive = true;
             openDialog("restart-home");
-        }, 1000);
+        }, 2000);
+        IntervalHub.stopAllIntervals();
     }
 }
 
 function home() {
-    // const startRef = document.getElementById("start-screen");
     const endRef = document.getElementById("restart-home");
     endRef.close();
     endRef.innerHTML = "";
@@ -64,6 +63,7 @@ function home() {
 
 function openDialog(id) {
     const openDialogRef = document.getElementById(id);
+    openDialogRef.innerHTML = "";
     openDialogRef.showModal();
     if (id == "information-dialog") {
         const dataRef = document.getElementById("information-dialog");
@@ -72,7 +72,7 @@ function openDialog(id) {
         const dataRef2 = document.getElementById(id);
         dataRef2.innerHTML += getControlTemplate();
     } else if (id == "restart-home") {
-        const restartRef = document.getElementById("restart-home");
+        const restartRef = document.getElementById(id);
         restartRef.innerHTML = getRestartTemplate();
         restartRef.style.display = "flex";
     }
@@ -81,6 +81,7 @@ function openDialog(id) {
 function closeDialog(id) {
     const openDialogRef = document.getElementById(id);
     openDialogRef.close();
+    openDialogRef.innerHTML = "";
 }
 
 function mute() {
