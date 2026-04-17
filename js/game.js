@@ -130,6 +130,6 @@ function enterFullscreen(element) {
 
 // Restart button
 
-// die Welt einen neuen wert zuweisen! leerer Array! und neu erstellen!!
+// der Welt einen neuen wert zuweisen! leerer Array! und neu erstellen!!
 // es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?
 // ALLE INTERVALLE MÜSSEN GELÖSCHT WERDEN!!
