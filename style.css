@@ -11,9 +11,12 @@ header {
     width: 100%;
     text-align: center;
     z-index: 9999;
+    color: #F6F6EC;
 }
 
 body {
+    width: 100%;
+    height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +47,8 @@ main {
 
 #canvas-buttons {
     position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -67,6 +72,24 @@ main {
     justify-content: space-between;
 }
 
+#move-btn{
+    margin-left: 48px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 24px;
+}
+
+#jump-throw-btn{
+    margin-right: 48px;
+    display: flex;
+    gap: 24px;
+
+    img{
+        width: 39px;
+        height: 39px;
+    }
+}
+
 #upper-buttons {
     gap: 16px;
     display: flex;
@@ -79,8 +102,10 @@ canvas {
 }
 
 #start-screen {
-    width: min(100%, 720px); 
-    height: min(100dvh, 480px);
+    /* width: min(100%, 720px); 
+    height: min(100dvh, 480px); */
+    width: 720px;
+    height: 480px;
     background-image: url("./img/start-screen/start-screen.jpg");
     background-size: cover;
     display: flex;
@@ -127,6 +152,7 @@ canvas {
     border-width: 0;
     overflow-x: hidden;
     z-index: 999;
+    padding: 16px;
 
     &:focus{
         outline: none;
@@ -181,7 +207,7 @@ p {
 }
 
 /* Smartphone Höhe */
-@media only screen and (max-height: 480px) {
+@media only screen and (max-height: 720px) {
     canvas {
         height: 100dvh;
     }

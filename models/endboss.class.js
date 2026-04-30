@@ -74,7 +74,6 @@ export class Endboss extends MovableObjekt {
         // Boss stirbt
         if (this.isDead()) {
             SoundHub.playOne(SoundHub.enemyDead);
-
             setTimeout(() => {
                 SoundHub.stopAll();
             }, 400);

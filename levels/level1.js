@@ -12,6 +12,12 @@ export let level1 = new Level(
         new Chicken(),
         new Chicken(),
         new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
         new Endboss()
     ],
     [
@@ -69,10 +75,11 @@ export let level1 = new Level(
         new CollectableBotle(ImageHub.botle.botleGround[0]),
         new CollectableBotle(ImageHub.botle.botleGround[0]),
         new CollectableBotle(ImageHub.botle.botleGround[0]),
+        new CollectableBotle(ImageHub.botle.botleGround[0]),
+        new CollectableBotle(ImageHub.botle.botleGround[0]),
+        new CollectableBotle(ImageHub.botle.botleGround[0]),
+        new CollectableBotle(ImageHub.botle.botleGround[0]),
+        new CollectableBotle(ImageHub.botle.botleGround[0]),
         new CollectableBotle(ImageHub.botle.botleGround[0])
     ]
 ); 
-// let level1;
-// function initLevel(){
-//    level1 = new Level (....)
-// }

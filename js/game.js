@@ -30,7 +30,6 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
-
 }
 
 function start() {
@@ -118,18 +117,12 @@ function enterFullscreen(element) {
 
 
 // Responsive
-// Zu wenige Hühner
 // Collision von oben
 // JS Doc
-// Lebensbalken vom Endboss muss sich nach jedem treffer aktualisieren
 // toten code entfernen
 // Methoden Kürzen maximal 14 zeilen!!
 // Soundhub überprüfen
-// Sound Icon tauschen
-// Impressum Farben anpassen nicht richtig lesbar!
-
 // Restart button
-
 // der Welt einen neuen wert zuweisen! leerer Array! und neu erstellen!!
 // es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?
 // ALLE INTERVALLE MÜSSEN GELÖSCHT WERDEN!!

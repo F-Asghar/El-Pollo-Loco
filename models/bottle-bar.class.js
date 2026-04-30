@@ -7,12 +7,12 @@ export class BotleBar extends StatusBar{
         y = 100;
         height = 60;
         width = 200;
-        static pice = 10;
+        static pice = 2;
         
         constructor(){
             super().loadImage("img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png");
             this.loadImages(ImageHub.statusBar.botle);
-            this.setPice(10);
+            this.setPice(2);
         }
     
         setPice(pice){
