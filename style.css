@@ -56,6 +56,7 @@ main {
     height: 100%;
     z-index: 100;
     display: none;
+    /* pointer-events: none; */
 }
 
 .game-buttons {
@@ -67,9 +68,17 @@ main {
     }
 }
 
-#control-buttons {
+#upper-buttons {
+    gap: 16px;
     display: flex;
+    justify-content: flex-end;
+    display: none;
+}
+
+#control-buttons {
+    /* display: flex; */
     justify-content: space-between;
+    display: none;
 }
 
 #move-btn{
@@ -90,22 +99,16 @@ main {
     }
 }
 
-#upper-buttons {
-    gap: 16px;
-    display: flex;
-    justify-content: flex-end;
-}
-
 canvas {
     background-color: black;
     display: block;
+    width: inherit;
+    height: inherit;
 }
 
 #start-screen {
-    /* width: min(100%, 720px); 
-    height: min(100dvh, 480px); */
-    width: 720px;
-    height: 480px;
+    width: inherit;
+    height: inherit;
     background-image: url("./img/start-screen/start-screen.jpg");
     background-size: cover;
     display: flex;
@@ -113,6 +116,8 @@ canvas {
     align-items: center;
     gap: 40px;
     position: absolute;
+    z-index: 10;
+    top: 0;
 }
 
 .home-content {
@@ -121,9 +126,13 @@ canvas {
     text-align: center;
 }
 
+h4{
+    font-size: clamp(16px, 3.5vw, 32px);
+}
+
 .home-buttons {
-    width: 100px;
-    height: 100px;
+    width: clamp(40px, 10vw, 100px);
+    height: clamp(40px, 10vw, 100px);
 
     &:hover {
         cursor: pointer;
@@ -140,8 +149,10 @@ canvas {
 }
 
 .dialog {
-    width: min(100%, 720px);
-    height: min(100dvh, 480px);
+    width: inherit;
+    height: inherit;
+    max-width: 100vw; 
+    max-height: 100vh;
     background-image: url("./img/start-screen/start-screen.jpg");
     background-size: cover;
     flex-direction: column;
@@ -152,7 +163,8 @@ canvas {
     border-width: 0;
     overflow-x: hidden;
     z-index: 999;
-    padding: 16px;
+    padding: clamp(10px, 15vw, 16px);
+    margin: 0;
 
     &:focus{
         outline: none;
@@ -187,8 +199,16 @@ canvas {
 }
 
 p {
-    font-size: 24px;
+    font-size: clamp(16px, 2.5vw, 24px);
     font-weight: bold;
+}
+
+h2{
+   font-size: clamp(24px, 5.5vw, 54px); 
+}
+
+h3{
+   font-size: clamp(20px, 5.5vw, 48px); 
 }
 
 #headline {
@@ -204,6 +224,11 @@ p {
     canvas {
         width: 100vw;
     }
+
+    #canvas-section{
+        width: 100vw;
+        height: clamp(200px, 60vw, 480px)
+    }
 }
 
 /* Smartphone Höhe */
@@ -214,4 +239,11 @@ p {
     h1 {
         display: none;
     }
+}
+
+@media (orientation: landscape) and (pointer: coarse) {
+  #canvas-section {
+    width: 100dvw;
+    height: 100dvh;
+  }
 }

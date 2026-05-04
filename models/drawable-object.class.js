@@ -40,12 +40,4 @@ export class DrawableObject {
     }
 
 
-
-
-
-
-
-
-
-
 }

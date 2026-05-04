@@ -12,17 +12,7 @@ export class Cloud extends MovableObjekt{
 
     constructor(){
         super().loadImage("img/5_background/layers/4_clouds/1.png");
-        this.animate();
-        // IntervalHub.startInterval(this.moveLeft, 1000 / 60);
+        IntervalHub.startInterval(() => this.moveLeft(), 1000 / 60);
     }
 
-    // animate(){
-    //     this.moveLeft();
-    // }
-
-    animate(){
-        setInterval(() =>{
-            this.x - this.speed;
-        } ,1000) 
-    }
 }

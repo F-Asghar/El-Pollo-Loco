@@ -44,7 +44,7 @@ export class MovableObjekt extends DrawableObject {
     }
 
 
-            // kollision von oben muss überarbeitet werden!!
+    // kollision von oben muss überarbeitet werden!!
     // isCollidingFromTop(mO) {
     //     return (
     //         // flag setzen noch!

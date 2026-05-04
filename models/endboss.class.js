@@ -37,7 +37,7 @@ export class Endboss extends MovableObjekt {
         this.loadImages(ImageHub.endboss.hurt);
         IntervalHub.startInterval(this.startMovement, 1000 / 20);
         IntervalHub.startInterval(this.startAnimation, 200);
-        IntervalHub.startInterval(this.animate, 200);
+        IntervalHub.startInterval(this.moveLeft, 200);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
         IntervalHub.startInterval(this.setSound, 1000 / 60);
     }
