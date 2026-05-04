@@ -76,7 +76,7 @@ export class Endboss extends MovableObjekt {
             SoundHub.playOne(SoundHub.enemyDead);
             setTimeout(() => {
                 SoundHub.stopAll();
-            }, 400);
+            }, 600);
         }
     };
     
@@ -88,7 +88,7 @@ export class Endboss extends MovableObjekt {
             // hier alle animationen und intervalle stoppen und löschen!
             setTimeout(() => {
                 IntervalHub.stopAllIntervals();
-            }, 400);
+            }, 600);
         } else if (this.isHurt()) {
             this.playAnimation(ImageHub.endboss.hurt);
             this.soundPlayed = false;

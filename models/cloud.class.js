@@ -4,7 +4,7 @@ import { MovableObjekt } from "./movable-object.class.js";
 
 export class Cloud extends MovableObjekt{
 
-    x = 0 + Math.random() * 700;
+    x = 0 + Math.random() * 1500;
     y = 10 + Math.random() * 50;
     width = 500;
     height = 250;

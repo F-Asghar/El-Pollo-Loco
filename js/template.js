@@ -18,7 +18,7 @@ export function getRestartTemplate() {
                 <img
                     id="restart-button"
                     class="home-buttons"
-                    onclick="start()"
+                    onclick="startGame()"
                     src="./img/start-screen/restart.png"
                     alt=""
                 />

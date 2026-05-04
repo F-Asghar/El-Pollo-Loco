@@ -1,3 +1,4 @@
+import { level1, initLevel } from "../levels/level1.js";
 import { Character } from "../models/character.class.js";
 import { Endboss } from "../models/endboss.class.js";
 import { IntervalHub } from "../models/intervalHub.class.js";
@@ -15,7 +16,7 @@ let canvas;
 let world;
 
 window.fullscreen = fullscreen;
-window.start = start;
+window.startGame = startGame;
 window.openDialog = openDialog;
 window.closeDialog = closeDialog;
 window.mute = mute;
@@ -23,21 +24,20 @@ window.volume = volume;
 window.finished = finished;
 window.home = home;
 
-
 function init() {
-    // world = null funktioniert noch nicht weil noch intervalle laufen!
-    world = null;
+    console.log('Level Daten vor World-Erstellung:', level1); 
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
 }
 
-function start() {
+function startGame() {
     const start = document.getElementById("start-screen");
     const dialogref = document.getElementById("restart-home");
     dialogref.style.display = "none"
     start.style.display = "none";
-    init();
+    initLevel();
+    init(); 
 }
 
 function finished() {
@@ -49,7 +49,6 @@ function finished() {
             Endboss.alive = true;
             openDialog("restart-home");
         }, 2000);
-        IntervalHub.stopAllIntervals();
     }
 }
 
@@ -116,13 +115,12 @@ function enterFullscreen(element) {
 
 
 
-// Responsive
+// Mobile ansicht
 // Collision von oben
+// es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?
+// ALLE INTERVALLE MÜSSEN GELÖSCHT WERDEN!!
+
+
 // JS Doc
 // toten code entfernen
 // Methoden Kürzen maximal 14 zeilen!!
-// Soundhub überprüfen
-// Restart button
-// der Welt einen neuen wert zuweisen! leerer Array! und neu erstellen!!
-// es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?
-// ALLE INTERVALLE MÜSSEN GELÖSCHT WERDEN!!

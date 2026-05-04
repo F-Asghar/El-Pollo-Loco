@@ -30,7 +30,7 @@ export class CollectableCoins extends CollectableObjekts{
         this.animate(ImageHub.coin.coinPuls);
         this.getRealFrame();
         this.playAnimation(ImageHub.coin.coinPuls);
-        IntervalHub.startInterval(this.animate, 500);
+        IntervalHub.startInterval(this.puls, 500);
         IntervalHub.startInterval(this.getRealFrame, 1000/60);
     }
 
@@ -38,7 +38,7 @@ export class CollectableCoins extends CollectableObjekts{
         this.puls();   
     }
     
-    puls(){
+    puls= () => {
         this.playAnimation(ImageHub.coin.coinPuls);
     }
 
