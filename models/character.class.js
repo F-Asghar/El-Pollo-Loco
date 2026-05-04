@@ -20,8 +20,11 @@ export class Character extends MovableObjekt {
     static alive = true;
     static isNearBy = false;
     static lastKeypressed = 0;
+    // static walking_sound_running = false;
     soundPlayed = false;
     hurtSound = false;
+    deadSound = false;
+    
     offset = {
         top: 120,
         right: 40,
@@ -46,6 +49,7 @@ export class Character extends MovableObjekt {
         this.applyGravity();
         this.getRealFrame();
         this.long();
+        IntervalHub.startInterval(this.pepeWalkSound, 1000 / 4);
         IntervalHub.startInterval(this.setSoundSlow, 1000 / 4);
         IntervalHub.startInterval(this.setSoundFast, 1000 / 60);
         IntervalHub.startInterval(this.stopSound, 1000 / 60);
@@ -64,7 +68,11 @@ export class Character extends MovableObjekt {
 
     startMovement = () => {
         // Mit this.world.level.level_end_x verhindern wir, dass der Character weiter nach rechts laufen kann (Ende vom Level)
-        if (Keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+        if (
+            Keyboard.RIGHT &&
+            this.x < this.world.level.level_end_x &&
+            Character.alive
+        ) {
             this.moveRight();
             this.otherDirection = false;
             Character.otherDirection = false;
@@ -72,14 +80,14 @@ export class Character extends MovableObjekt {
         }
 
         // this.x > 0 verhindert, dass der character weiter nach links laufen kann
-        if (Keyboard.LEFT && this.x > 0) {
+        if (Keyboard.LEFT && this.x > 0 && Character.alive) {
             this.moveLeft();
             this.otherDirection = true;
             Character.otherDirection = true;
         }
 
         // Wir können nur springen wenn unser Character auf dem Boden ist
-        if (Keyboard.UP && !this.isAboveGround()) {
+        if (Keyboard.UP && !this.isAboveGround() && Character.alive) {
             this.jump();
             this.soundPlayed = false;
         }
@@ -91,14 +99,15 @@ export class Character extends MovableObjekt {
     startAnimation = () => {
         // Mit If abfragen können wir die dazugehörigen Bilderabfolgen starten
         if (this.isDead()) {
+            SoundHub.pepeWalk.pause();
             this.playAnimation(ImageHub.pepe.dead);
             Character.alive = false;
-            SoundHub.stopAll();
+            SoundHub.pepeHurt.pause();
             // hier alle animationen und intervalle stoppen und löschen!
             setTimeout(() => {
                 IntervalHub.stopAllIntervals();
-                SoundHub.playOne(SoundHub.pepeDead);
-            }, 400);
+                SoundHub.stopAll();
+            }, 1200);
         } else if (this.isAboveGround()) {
             this.playAnimation(ImageHub.pepe.jump);
             this.long();
@@ -130,23 +139,54 @@ export class Character extends MovableObjekt {
     }
 
     setSoundSlow = () => {
-        if (Keyboard.LEFT && !this.isAboveGround() || (Keyboard.RIGHT && !this.isAboveGround())) {
-            // Startet den Sound fürs Laufen
-            SoundHub.playOne(SoundHub.pepeWalk);
-        } else if (this.isHurt() && !this.hurtSound) {
+        if (this.isHurt() && !this.hurtSound) {
             SoundHub.playOne(SoundHub.pepeHurt);
             this.hurtSound = true;
             setTimeout(() => {
                 this.hurtSound = false;
             }, 2000);
         } else if (this.isWaitingLong() && !this.soundPlayed) {
-            SoundHub.playOne(SoundHub.pepeSleep); 
+            SoundHub.playOne(SoundHub.pepeSleep);
             this.soundPlayed = true;
+            setTimeout(() => {
+                this.soundPlayed = false;
+            }, 5000);
+        } else if (!this.deadSound && !Character.alive) {
+            SoundHub.allSounds = [];
+            SoundHub.playOne(SoundHub.pepeDead);
+            this.deadSound = true;
+            setTimeout(() => {
+                this.deadSound = false;
+            }, 2500);
         }
-    }
+    };
+
+    // pepeWalkSound = () => {
+    //     if (
+    //         (Keyboard.LEFT && !this.isAboveGround()) ||
+    //         (Keyboard.RIGHT && !this.isAboveGround())
+    //     ) {
+    //         // Startet den Sound fürs Laufen
+    //         SoundHub.playOne(SoundHub.pepeWalk);
+    //     }
+    // }
+
+    pepeWalkSound = () => {
+        const isMovingOnGround =
+            (Keyboard.LEFT || Keyboard.RIGHT) && !this.isAboveGround();
+
+        if (isMovingOnGround) {
+                // Character.walking_sound_running = true;
+                SoundHub.playOne(SoundHub.pepeWalk); 
+        } else if (!this.walking_sound_running) {
+            // Wenn er aufhört zu laufen
+            // this.walking_sound_running = false;
+            SoundHub.pepeWalk.pause(); 
+        }
+    };
 
     setSoundFast = () => {
-        if (Keyboard.UP && !this.isAboveGround()) {
+        if (Keyboard.UP && !this.isAboveGround() && Character.alive) {
             SoundHub.stopOne(SoundHub.pepeWalk);
             SoundHub.playOne(SoundHub.pepeJump);
         }

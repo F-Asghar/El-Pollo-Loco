@@ -1,3 +1,4 @@
+
 export class Keyboard {
     static UP = false;
     static LEFT = false;
@@ -26,9 +27,11 @@ export class Keyboard {
             }
             if (e.key == "ArrowLeft") {
                 Keyboard.LEFT = false;
+                // Character.walking_sound_running = false;
             }
             if (e.key == "ArrowRight") {
                 Keyboard.RIGHT = false;
+                // Character.walking_sound_running = false;
             }
             if (e.key == "d") {
                 Keyboard.D = false;

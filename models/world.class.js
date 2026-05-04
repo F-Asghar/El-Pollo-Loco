@@ -42,13 +42,11 @@ export class World {
         // (stell es dir vor wie async und await bei Funktionen). Wichtig! >> ctx als Variable immer so nehmen!
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
-        this.level = level1; // hier raus nehmen 
+        this.level = level1; 
         this.setWorld();
         this.draw();
         this.imgLost = this.loadImage(ImageHub.loose.lost[0]);
         this.imgWin = this.loadImage(ImageHub.win.won[0]);
-
-        // hier starten wir run, welche unsere intervalle beinhaltet mit 60FPS
         IntervalHub.startInterval(this.run, 1000 / 60);
     }
 
