@@ -38,6 +38,7 @@ function startGame() {
     start.style.display = "none";
     initLevel();
     init(); 
+    SoundHub.resetSound();
 }
 
 function finished() {
@@ -46,6 +47,7 @@ function finished() {
             const start = document.getElementById("start-screen");
             start.style.display = "flex";
             Character.alive = true;
+            Character.isNearBy = false;
             Endboss.alive = true;
             openDialog("restart-home");
         }, 2000);

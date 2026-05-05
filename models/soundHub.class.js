@@ -45,6 +45,28 @@ export class SoundHub {
         }
     }
 
+    static resetSound(){
+        SoundHub.allSounds = [];
+        sound.volume = 0.2;
+        SoundHub.muted = false;
+        SoundHub.playing = true;
+
+        allAudioObjects.forEach(sound => {
+            sound.pause();        // Stoppen, falls es noch spielt
+            sound.currentTime = 0; // An den Anfang springen
+            sound.volume = 0.2;    // Standard-Lautstärke wiederherstellen
+            sound.load();         // Den Sound neu in den Puffer laden (wichtig für Soft-Resets!)
+        });
+
+        const allAudioObjects = [
+            this.pepeWalk, this.pepeJump, this.pepeHurt, this.pepeDead, this.pepeSleep,
+            this.enemyDead, this.enemyHit, this.endBoss,
+            this.collectCoins, this.collectBottle, this.bottleBreak, this.gameStart
+        ];
+
+        console.log("SoundHub: Alle Sounds erfolgreich zurückgesetzt.");
+    }
+
     static playAll() {
         if (!SoundHub.playing) {
             SoundHub.allSounds.forEach((sound) => {

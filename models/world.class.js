@@ -76,6 +76,7 @@ export class World {
                 this.canvas.height
             );
         }
+        // resetSettings();
     }
 
     youWon() {
@@ -88,6 +89,14 @@ export class World {
                 this.canvas.height
             );
         }
+        // resetSettings();
+    }
+
+    resetSettings(){
+        if(!Character.alive || !Endboss.alive){
+            Character.isNearBy = false;
+        }
+        
     }
 
     run = () => {
