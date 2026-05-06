@@ -121,8 +121,6 @@ function enterFullscreen(element) {
 
 // Mobile ansicht
 // Collision von oben
-// es müssen alle referenzen gelöscht werden (alle intervalle, solange eins übrig ist gehts nicht!!) // world auf null setzen?
-// ALLE INTERVALLE MÜSSEN GELÖSCHT WERDEN!!
 
 
 // JS Doc

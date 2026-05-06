@@ -33,16 +33,15 @@ export class World {
     statusBar = new StatusBar();
     endbossBar = new EndbossBar();
     throwableObjects = [];
-    collided = false;
-    bottleCollided = false;
     isThrowing = false;
+    finished = false;
 
     constructor(canvas) {
         // Mit ctx.getContext("2d") lässt uns Methoden aufrufen für unser Canvas
         // (stell es dir vor wie async und await bei Funktionen). Wichtig! >> ctx als Variable immer so nehmen!
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
-        this.level = level1; 
+        this.level = level1;
         this.setWorld();
         this.draw();
         this.imgLost = this.loadImage(ImageHub.loose.lost[0]);
@@ -55,10 +54,9 @@ export class World {
         this.character.world = this;
     }
 
-    gameFinished(){
+    gameFinished() {
         finished();
     }
-
 
     loadImage(path) {
         const img = new Image();
@@ -73,7 +71,7 @@ export class World {
                 0,
                 0,
                 this.canvas.width,
-                this.canvas.height
+                this.canvas.height,
             );
         }
     }
@@ -85,14 +83,13 @@ export class World {
                 0,
                 0,
                 this.canvas.width,
-                this.canvas.height
+                this.canvas.height,
             );
         }
     }
 
-
     run = () => {
-        // hier starten wir unsere Intervalle 
+        // hier starten wir unsere Intervalle
         // this.checkCollisionsFromTop();
         this.checkCollisions();
         this.checkCollisionsCoins();
@@ -105,18 +102,23 @@ export class World {
     };
 
     checkThrowObjects = () => {
-        if (Keyboard.D && BotleBar.pice > 0 && !this.isThrowing) {
+        if (
+            Keyboard.D &&
+            BotleBar.pice > 0 &&
+            !this.isThrowing &&
+            Character.alive
+        ) {
             // Flasche in die richtige Richtung werfen
             let bottle;
             if (Character.otherDirection) {
                 bottle = new ThrowableObject(
                     this.character.x - 20,
-                    this.character.y + 100
+                    this.character.y + 100,
                 );
             } else {
                 bottle = new ThrowableObject(
                     this.character.x + 70,
-                    this.character.y + 100
+                    this.character.y + 100,
                 );
             }
             this.throwableObjects.push(bottle);
@@ -142,21 +144,62 @@ export class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isCollidingFromTop(this.character)) {
                 console.log(enemy.isCollidingFromTop(this.character));
-                enemy.enemyHit();                
+                enemy.enemyHit();
             }
         });
     }
 
+
+
+
+    
+
+    // checkCollisionsThrowBotel() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         this.throwableObjects.forEach((botle, index) => {
+    //             if (
+    //                 botle.isColliding(enemy) &&
+    //                 !botle.bottleCollided &&
+    //                 !enemy.isDead()
+    //             ) {
+    //                 enemy.enemyHit();
+    //                 botle.bottleCollided = true;
+    //                 SoundHub.playOne(SoundHub.bottleBreak);
+    //                 setTimeout(() => {
+    //                     let i = this.throwableObjects.indexOf(botle);
+    //                     if (i > -1) {
+    //                         this.throwableObjects.splice(i, 1);
+    //                     }
+    //                 }, 200);
+    //                 if (enemy instanceof Endboss) {
+    //                     this.endbossBar.setPercentage(enemy.energy);
+    //                 }
+    //             }
+    //         });
+    //     });
+    // }
+
     checkCollisionsThrowBotel() {
         this.level.enemies.forEach((enemy) => {
-            this.throwableObjects.forEach((botle, index) => {
-                if (botle.isColliding(enemy) && !botle.bottleCollided) {
+            this.throwableObjects.forEach((botle) => {
+                // Wenn Kollision UND Flasche noch aktiv ist UND Gegner lebt
+                if (
+                    botle.isColliding(enemy) &&
+                    !botle.bottleCollided &&
+                    !enemy.isDead()
+                ) {
+                    botle.bottleCollided = true; // Triggert die splash() Logik oben
                     enemy.enemyHit();
-                    botle.bottleCollided = true;
                     SoundHub.playOne(SoundHub.bottleBreak);
+
+                    // Erst nach 500ms löschen, damit man den Splash sieht
                     setTimeout(() => {
-                        this.throwableObjects.splice(index, 1);
-                    }, 200);
+                        let i = this.throwableObjects.indexOf(botle);
+                        if (i > -1) {
+                            this.throwableObjects.splice(i, 1);
+                        }
+                    }, 150);
+
                     if (enemy instanceof Endboss) {
                         this.endbossBar.setPercentage(enemy.energy);
                     }
@@ -164,6 +207,14 @@ export class World {
             });
         });
     }
+
+
+
+
+
+
+
+
 
     checkCollisionsCoins() {
         this.level.coins.forEach((coins, index) => {
