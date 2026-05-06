@@ -10,7 +10,7 @@ header {
     top: 30px;
     width: 100%;
     text-align: center;
-    z-index: 9999;
+    /* z-index: 10; */
     color: #f6f6ec;
 }
 
@@ -126,7 +126,6 @@ canvas {
     justify-content: center;
     align-items: center;
     display: none;
-    pointer-events: none;
 
     img {
         filter: invert(1);
@@ -185,7 +184,7 @@ canvas {
     transform: translate(-50%, -50%);
     border-width: 0;
     overflow-x: hidden;
-    z-index: 999;
+    z-index: 15;
     padding: clamp(10px, 15vw, 16px);
     margin: 0;
 
@@ -195,14 +194,10 @@ canvas {
 }
 
 #restart-home {
-    display: none;
+    /* display: none; */
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-}
-
-.d-none {
-    display: none;
 }
 
 #close-container {

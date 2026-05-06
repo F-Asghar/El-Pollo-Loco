@@ -39,6 +39,7 @@ export class Keyboard {
         });
 
         window.addEventListener("pointerdown", (e) => {
+            console.log("Getroffenes Element:", e.target);
             if (e.target.id === "btn-up") Keyboard.UP = true;
             if (e.target.id === "btn-left") Keyboard.LEFT = true;
             if (e.target.id === "btn-right") Keyboard.RIGHT = true;

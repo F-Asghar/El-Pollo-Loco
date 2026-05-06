@@ -16,7 +16,7 @@ export class SoundHub {
 
     static collectCoins = new Audio("./sounds/collectibles/collectSound.wav");
     static collectBottle = new Audio("./sounds/collectibles/bottleCollectSound.wav");
-    static bottleBreak = new Audio("./sounds/collectibles/bottleCollectSound.wav");
+    static bottleBreak = new Audio("./sounds/throwable/bottleBreak.mp3");
     static gameStart = new Audio("./sounds/game/gameStart.mp3");
 
     // Array, das alle definierten Audio-Dateien enthält
@@ -45,27 +45,24 @@ export class SoundHub {
         }
     }
 
-    static resetSound(){
-        SoundHub.allSounds = [];
-        sound.volume = 0.2;
-        SoundHub.muted = false;
-        SoundHub.playing = true;
+static resetSound() {
+    // 1. Alle laufenden Sounds stoppen
+    this.allSounds.forEach((sound) => {
+        sound.pause();        // Beendet die Wiedergabe
+        sound.currentTime = 0; // Setzt den Sound an den Anfang zurück
+    });
 
-        allAudioObjects.forEach(sound => {
-            sound.pause();        // Stoppen, falls es noch spielt
-            sound.currentTime = 0; // An den Anfang springen
-            sound.volume = 0.2;    // Standard-Lautstärke wiederherstellen
-            sound.load();         // Den Sound neu in den Puffer laden (wichtig für Soft-Resets!)
-        });
+    // 2. Das Array komplett leeren (löscht die Referenzen)
+    this.allSounds = [];
 
-        const allAudioObjects = [
-            this.pepeWalk, this.pepeJump, this.pepeHurt, this.pepeDead, this.pepeSleep,
-            this.enemyDead, this.enemyHit, this.endBoss,
-            this.collectCoins, this.collectBottle, this.bottleBreak, this.gameStart
-        ];
-
-        console.log("SoundHub: Alle Sounds erfolgreich zurückgesetzt.");
-    }
+    // 3. Auf Standardeinstellungen zurücksetzen
+    SoundHub.muted = false;
+    SoundHub.playing = true;
+    
+    // Falls du eine globale Standard-Lautstärke für neue Sounds willst:
+    // (Achte darauf, dass diese Variable auch existiert)
+    this.defaultVolume = 0.2; 
+}
 
     static playAll() {
         if (!SoundHub.playing) {

@@ -34,11 +34,12 @@ function init() {
 function startGame() {
     const start = document.getElementById("start-screen");
     const dialogref = document.getElementById("restart-home");
-    dialogref.style.display = "none"
+    dialogref.close();
+    dialogref.innerHTML = "";
+    dialogref.style.display = "none";
     start.style.display = "none";
     initLevel();
     init(); 
-    SoundHub.resetSound();
 }
 
 function finished() {
@@ -49,6 +50,7 @@ function finished() {
             Character.alive = true;
             Character.isNearBy = false;
             Endboss.alive = true;
+            SoundHub.resetSound();
             openDialog("restart-home");
         }, 2000);
     }
