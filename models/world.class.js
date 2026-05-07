@@ -90,7 +90,7 @@ export class World {
 
     run = () => {
         // hier starten wir unsere Intervalle
-        // this.checkCollisionsFromTop();
+        this.checkCollisionsFromTop();
         this.checkCollisions();
         this.checkCollisionsCoins();
         this.checkCollisionsBotle();
@@ -142,42 +142,14 @@ export class World {
 
     checkCollisionsFromTop() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isCollidingFromTop(this.character)) {
+            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss)) {
                 console.log(enemy.isCollidingFromTop(this.character));
                 enemy.enemyHit();
+                // this.character.jump();
             }
         });
     }
 
-
-
-
-    
-
-    // checkCollisionsThrowBotel() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         this.throwableObjects.forEach((botle, index) => {
-    //             if (
-    //                 botle.isColliding(enemy) &&
-    //                 !botle.bottleCollided &&
-    //                 !enemy.isDead()
-    //             ) {
-    //                 enemy.enemyHit();
-    //                 botle.bottleCollided = true;
-    //                 SoundHub.playOne(SoundHub.bottleBreak);
-    //                 setTimeout(() => {
-    //                     let i = this.throwableObjects.indexOf(botle);
-    //                     if (i > -1) {
-    //                         this.throwableObjects.splice(i, 1);
-    //                     }
-    //                 }, 200);
-    //                 if (enemy instanceof Endboss) {
-    //                     this.endbossBar.setPercentage(enemy.energy);
-    //                 }
-    //             }
-    //         });
-    //     });
-    // }
 
     checkCollisionsThrowBotel() {
         this.level.enemies.forEach((enemy) => {

@@ -5,13 +5,14 @@ import { SoundHub } from "./soundHub.class.js";
 
 export class Chicken extends MovableObjekt {
     // Math.random() holt zufällig eine Zahl zwischen 0 und 1 * 500 dann zwischen 1 und 500
-    x = 1400 + Math.random() * 500;
+    x = 800 + Math.random() * 1000;
     y = 335;
     height = 100;
     width = 100;
     speed = 2 + Math.random() * 1;
     energy = 100;
     soundPlayed;
+    jumpedOn = false;
     offset = {
         top: 20,
         right: 25,

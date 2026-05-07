@@ -14,7 +14,6 @@ export class Character extends MovableObjekt {
     speed = 10;
     world;
     lastHit;
-    // isAlive;
     energy = 100;
     static otherDirection = false;
     static alive = true;

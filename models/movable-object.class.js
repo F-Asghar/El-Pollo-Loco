@@ -45,14 +45,14 @@ export class MovableObjekt extends DrawableObject {
 
 
     // kollision von oben muss überarbeitet werden!!
-    // isCollidingFromTop(mO) {
-    //     return (
-    //         // flag setzen noch!
-    //         this.rX < mO.rX + mO.rW - 15 &&
-    //         this.rY < mO.rY + mO.rH &&
-    //         this.rX - 15 + this.rW > mO.rX
-    //     );
-    // }
+    isCollidingFromTop(mO) {
+        return (
+            // flag setzen noch!
+            this.rX < mO.rX + mO.rW - 15 &&
+            this.rY < mO.rY + mO.rH &&
+            this.rX - 15 + this.rW > mO.rX
+        );
+    }
 
     hit() {
         this.energy -= 4;
