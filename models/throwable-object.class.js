@@ -67,55 +67,18 @@ export class ThrowableObject extends MovableObjekt {
     };
 
     startRotation = () => {
+        if (!this.alreadySplashed) {
         this.playAnimation(ImageHub.botle.botleRotation);
+    }
     };
 
     splash = () => {
-    if (this.bottleCollided && !this.alreadySplashed) {
-        this.speedX = 0;
-        this.speedY = 0;
-        this.alreadySplashed = true;
-        if (this.alreadySplashed){ 
+        if (this.bottleCollided && !this.alreadySplashed) {
+            this.speedX = 0;
+            this.speedY = 0;
+            this.acceleration = 0;
+            this.alreadySplashed = true;
             this.playAnimation(ImageHub.botle.botleSplash);
         }
-    }
-};
-
-
-
-
-// splash = () => {
-//     if (this.bottleCollided) {
-//         // Diese 3 Zeilen verhindern das "Fliegen" oder "Hüpfen"
-//         this.speedX = 0;       // Kein Vorwärtsflug mehr
-//         this.speedY = 0;       // Kein Aufwärts-/Abwärtsflug mehr
-//         this.acceleration = 0; // Schwerkraft komplett ausschalten
-
-//         if (!this.alreadySplashed) {
-//             clearInterval(this.rotationInterval);
-//             this.alreadySplashed = true;
-//         }
-
-//         this.playAnimationOnce(ImageHub.botle.botleSplash);
-//     }
-// };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    };
 }

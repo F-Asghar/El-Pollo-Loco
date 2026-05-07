@@ -182,24 +182,20 @@ export class World {
     checkCollisionsThrowBotel() {
         this.level.enemies.forEach((enemy) => {
             this.throwableObjects.forEach((botle) => {
-                // Wenn Kollision UND Flasche noch aktiv ist UND Gegner lebt
                 if (
                     botle.isColliding(enemy) &&
                     !botle.bottleCollided &&
                     !enemy.isDead()
                 ) {
-                    botle.bottleCollided = true; // Triggert die splash() Logik oben
+                    botle.bottleCollided = true; 
                     enemy.enemyHit();
                     SoundHub.playOne(SoundHub.bottleBreak);
-
-                    // Erst nach 500ms löschen, damit man den Splash sieht
                     setTimeout(() => {
                         let i = this.throwableObjects.indexOf(botle);
                         if (i > -1) {
                             this.throwableObjects.splice(i, 1);
                         }
-                    }, 150);
-
+                    }, 300);
                     if (enemy instanceof Endboss) {
                         this.endbossBar.setPercentage(enemy.energy);
                     }
