@@ -130,7 +130,7 @@ window.addEventListener('resize', () => {
 
 
 
-// Mobile ansicht
+
 // Collision von oben
 
 

@@ -13,6 +13,7 @@ export class Chicken extends MovableObjekt {
     energy = 100;
     soundPlayed;
     jumpedOn = false;
+    hitted = false;
     offset = {
         top: 20,
         right: 25,

@@ -89,7 +89,6 @@ export class World {
     }
 
     run = () => {
-        // hier starten wir unsere Intervalle
         this.checkCollisionsFromTop();
         this.checkCollisions();
         this.checkCollisionsCoins();
@@ -133,19 +132,26 @@ export class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !enemy.isDead()) {
+            if (this.character.isColliding(enemy) && !enemy.jumpedOn && !enemy.isDead()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+                console.log(enemy.jumpedOn);
+                enemy.hitted = true;
             }
         });
     }
 
     checkCollisionsFromTop() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss)) {
-                console.log(enemy.isCollidingFromTop(this.character));
+            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss) && !enemy.hitted) {
                 enemy.enemyHit();
-                // this.character.jump();
+                enemy.jumpedOn = true;
+                console.log(enemy.jumpedOn);
+                if(enemy.jumpedOn == true){
+                   this.character.jump(); 
+                }
+                // wie vermeide ich das erneute springen?
+                // wie kann ich mehrfach kollisionen vermeiden?
             }
         });
     }
@@ -167,7 +173,7 @@ export class World {
                         if (i > -1) {
                             this.throwableObjects.splice(i, 1);
                         }
-                    }, 300);
+                    }, 250);
                     if (enemy instanceof Endboss) {
                         this.endbossBar.setPercentage(enemy.energy);
                     }

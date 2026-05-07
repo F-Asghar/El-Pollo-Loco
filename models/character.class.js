@@ -26,7 +26,7 @@ export class Character extends MovableObjekt {
 
     offset = {
         top: 120,
-        right: 40,
+        right: 30,
         left: 20,
         bottom: 30,
     };
