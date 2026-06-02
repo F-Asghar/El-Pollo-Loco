@@ -132,10 +132,14 @@ export class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !enemy.jumpedOn && !enemy.isDead()) {
+            if (
+                this.character.isColliding(enemy) &&
+                !enemy.jumpedOn &&
+                !enemy.isDead() && 
+                !this.character.isAboveGround()
+            ) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
-                console.log(enemy.jumpedOn);
                 enemy.hitted = true;
             }
         });
@@ -143,19 +147,16 @@ export class World {
 
     checkCollisionsFromTop() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss) && !enemy.hitted) {
+            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss) && !enemy.isHit) {
                 enemy.enemyHit();
-                enemy.jumpedOn = true;
-                console.log(enemy.jumpedOn);
-                if(enemy.jumpedOn == true){
-                   this.character.jump(); 
+                enemy.isHit = true;
+                if (enemy.jumpedOn == false && !enemy.hasJumpedOn) {
+                    this.character.jump();
+                    enemy.jumpedOn = true;
                 }
-                // wie vermeide ich das erneute springen?
-                // wie kann ich mehrfach kollisionen vermeiden?
             }
         });
     }
-
 
     checkCollisionsThrowBotel() {
         this.level.enemies.forEach((enemy) => {
@@ -165,7 +166,7 @@ export class World {
                     !botle.bottleCollided &&
                     !enemy.isDead()
                 ) {
-                    botle.bottleCollided = true; 
+                    botle.bottleCollided = true;
                     enemy.enemyHit();
                     SoundHub.playOne(SoundHub.bottleBreak);
                     setTimeout(() => {
@@ -181,14 +182,6 @@ export class World {
             });
         });
     }
-
-
-
-
-
-
-
-
 
     checkCollisionsCoins() {
         this.level.coins.forEach((coins, index) => {

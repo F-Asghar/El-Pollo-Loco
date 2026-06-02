@@ -132,11 +132,14 @@ export class Character extends MovableObjekt {
 
     jump() {
         this.speedY = 30;
+        SoundHub.playOne(SoundHub.pepeJump);
+        SoundHub.stopOne(SoundHub.pepeSleep);
     }
 
     setSoundSlow = () => {
         if (this.isHurt() && !this.hurtSound) {
             SoundHub.playOne(SoundHub.pepeHurt);
+            SoundHub.stopOne(SoundHub.pepeSleep);
             this.hurtSound = true;
             setTimeout(() => {
                 this.hurtSound = false;
@@ -160,9 +163,9 @@ export class Character extends MovableObjekt {
     pepeWalkSound = () => {
         const isMoving =
             (Keyboard.LEFT || Keyboard.RIGHT) && !this.isAboveGround();
-
         if (isMoving && SoundHub.pepeWalk.paused && Character.alive && !SoundHub.muted) {
             SoundHub.pepeWalk.play();
+            SoundHub.stopOne(SoundHub.pepeSleep);
         } else if (!isMoving) {
             SoundHub.pepeWalk.pause();
         }

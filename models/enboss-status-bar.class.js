@@ -6,8 +6,8 @@ import { IntervalHub } from "./intervalHub.class.js";
 
 export class EndbossBar extends DrawableObject{
     
-    x = 510;
-    y = 0;
+    x = 520;
+    y = 10;
     height = 60;
     width = 200;
     lastHit;

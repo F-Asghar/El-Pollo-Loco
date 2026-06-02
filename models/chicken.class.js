@@ -9,10 +9,11 @@ export class Chicken extends MovableObjekt {
     y = 335;
     height = 100;
     width = 100;
-    speed = 2 + Math.random() * 1;
+    speed = 5 + Math.random() * 5;
     energy = 100;
     soundPlayed;
     jumpedOn = false;
+    isHit = false;
     hitted = false;
     offset = {
         top: 20,
@@ -31,6 +32,7 @@ export class Chicken extends MovableObjekt {
         // Erst müssen alle Bilder geladen werden  über loadImages um sie anzeigen zu können
         this.loadImages(ImageHub.chickenNormal.walk);
         this.loadImages(ImageHub.chickenNormal.dead);
+        IntervalHub.startInterval(this.changeDirection, 1000 / 60);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
         IntervalHub.startInterval(this.startMovement, 1000 / 20);
         IntervalHub.startInterval(this.startAnimation, 200);
@@ -50,10 +52,21 @@ export class Chicken extends MovableObjekt {
     };
 
     startMovement = () => {
-        if (!this.isDead()) {
+        if (!this.isDead() && !this.otherDirection) {
             this.moveLeft();
+        } else if(!this.isDead() && this.otherDirection) {
+            this.moveRight(); 
         }
     };
+
+    changeDirection = () => {
+        if (this.x <= 50) {
+            this.otherDirection = true;
+        }
+        else if (this.x >= 2400) {
+            this.otherDirection = false;
+        }
+    }
 
     setSound = () => {
         if (this.isDead() && !this.soundPlayed) {

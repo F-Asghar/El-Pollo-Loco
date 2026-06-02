@@ -14,6 +14,7 @@ export class Endboss extends MovableObjekt {
     energy = 1000;
     lastHit;
     soundPlayed;
+    approach = false;
     hurtSound = false;
     speed = 10;
     static alive = true;
@@ -43,23 +44,11 @@ export class Endboss extends MovableObjekt {
     }
 
     startMovement = () => {
-        // this.x > 0 verhindert, dass der character weiter nach links laufen kann
         if (Character.isNearBy && !this.isDead()) {
             this.moveLeft();
-            this.soundPlayed = true;
         }
     };
 
-    // setSound = () => {
-    //     if (!this.soundPlayed) {
-    //         SoundHub.playOne(SoundHub.enemyHit);
-    //     } else if (this.isDead()){
-    //         SoundHub.playOne(SoundHub.enemyDead);
-    //         setTimeout(() => {
-    //             SoundHub.stopAll();
-    //         }, 400);
-    //     }
-    // };
 
     setSound = () => {
         // Boss ist verletzt
@@ -81,7 +70,6 @@ export class Endboss extends MovableObjekt {
     };
     
     startAnimation = () => {
-        // Mit If abfragen können wir die dazugehörigen Bilderabfolgen starten
         if (this.isDead()) {
             this.playAnimation(ImageHub.endboss.dead);
             Endboss.alive = false;

@@ -25,7 +25,6 @@ window.finished = finished;
 window.home = home;
 
 function init() {
-    console.log('Level Daten vor World-Erstellung:', level1); 
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
@@ -40,6 +39,7 @@ function startGame() {
     start.style.display = "none";
     initLevel();
     init(); 
+    SoundHub.playOne(SoundHub.gameStart);
 }
 
 function finished() {
@@ -131,7 +131,6 @@ window.addEventListener('resize', () => {
 
 
 
-// Collision von oben
 
 
 // JS Doc

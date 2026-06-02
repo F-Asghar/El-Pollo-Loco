@@ -43,15 +43,17 @@ export class MovableObjekt extends DrawableObject {
         );
     }
 
-
     // kollision von oben muss überarbeitet werden!!
     isCollidingFromTop(mO) {
-        return (
-            // flag setzen noch!
-            this.rX < mO.rX + mO.rW - 15 &&
-            this.rY < mO.rY + mO.rH &&
-            this.rX - 15 + this.rW > mO.rX
-        );
+        // Nur ausführen, wenn der Charakter in der Luft ist UND nach unten fällt!
+        if (mO.isAboveGround() && mO.speedY <= 0) {
+            return (
+                this.rX < mO.rX + mO.rW - 15 &&
+                this.rY < mO.rY + mO.rH &&
+                this.rX - 15 + this.rW > mO.rX
+            );
+        }
+        return false; // Wenn er auf dem Boden läuft oder nach oben springt, passiert nichts
     }
 
     hit() {
@@ -59,8 +61,6 @@ export class MovableObjekt extends DrawableObject {
         if (this.energy < 0) {
             this.energy = 0;
         } else {
-            // diese Funktion ist vorgefertigt, und ermöglicht es uns
-            // den Zeitpunkt der Collision in dem Fall zu bestimmen (new Date().getTime()) --> Milisekunden ab dem 01.01.1970
             this.lastHit = new Date().getTime();
         }
     }
