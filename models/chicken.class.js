@@ -4,7 +4,6 @@ import { MovableObjekt } from "./movable-object.class.js";
 import { SoundHub } from "./soundHub.class.js";
 
 export class Chicken extends MovableObjekt {
-    // Math.random() holt zufällig eine Zahl zwischen 0 und 1 * 500 dann zwischen 1 und 500
     x = 800 + Math.random() * 1000;
     y = 335;
     height = 100;
@@ -29,7 +28,6 @@ export class Chicken extends MovableObjekt {
     constructor() {
         super();
         this.loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
-        // Erst müssen alle Bilder geladen werden  über loadImages um sie anzeigen zu können
         this.loadImages(ImageHub.chickenNormal.walk);
         this.loadImages(ImageHub.chickenNormal.dead);
         IntervalHub.startInterval(this.changeDirection, 1000 / 60);
@@ -40,12 +38,10 @@ export class Chicken extends MovableObjekt {
     }
 
     startAnimation = () => {
-        // Mit If abfragen können wir die dazugehörigen Bilderabfolgen starten
         if (this.isDead()) {
             this.playAnimation(ImageHub.chickenNormal.dead);
             this.height = 50;
             this.y = 385;
-            // wie stoppe ich genau diesen Interval? (startMovement)
         } else {
             this.playAnimation(ImageHub.chickenNormal.walk);
         }

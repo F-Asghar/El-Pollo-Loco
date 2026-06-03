@@ -12,11 +12,11 @@ export class Endboss extends MovableObjekt {
     x = 2600;
     y = 55;
     energy = 1000;
+    speed = 15;
     lastHit;
     soundPlayed;
-    approach = false;
     hurtSound = false;
-    speed = 10;
+    otherDirection = false;
     static alive = true;
     offset = {
         top: 20,
@@ -38,20 +38,21 @@ export class Endboss extends MovableObjekt {
         this.loadImages(ImageHub.endboss.hurt);
         IntervalHub.startInterval(this.startMovement, 1000 / 20);
         IntervalHub.startInterval(this.startAnimation, 200);
-        IntervalHub.startInterval(this.moveLeft, 200);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
         IntervalHub.startInterval(this.setSound, 1000 / 60);
+        IntervalHub.startInterval(this.changeDirection, 1000 / 60);
     }
 
     startMovement = () => {
-        if (Character.isNearBy && !this.isDead()) {
+        if (Character.isNearBy && !this.isDead() && !this.otherDirection) {
             this.moveLeft();
+        } 
+        else if(!this.isDead() && this.otherDirection) {
+            this.moveRight(); 
         }
     };
 
-
     setSound = () => {
-        // Boss ist verletzt
         if (this.isHurt() && !this.hurtSound) {
             SoundHub.playOne(SoundHub.enemyHit);
             this.hurtSound = true;
@@ -59,8 +60,6 @@ export class Endboss extends MovableObjekt {
                 this.hurtSound = false;
             }, 2000);
         }
-
-        // Boss stirbt
         if (this.isDead()) {
             SoundHub.playOne(SoundHub.enemyDead);
             setTimeout(() => {
@@ -73,7 +72,6 @@ export class Endboss extends MovableObjekt {
         if (this.isDead()) {
             this.playAnimation(ImageHub.endboss.dead);
             Endboss.alive = false;
-            // hier alle animationen und intervalle stoppen und löschen!
             setTimeout(() => {
                 IntervalHub.stopAllIntervals();
             }, 600);
@@ -86,4 +84,10 @@ export class Endboss extends MovableObjekt {
             this.playAnimation(ImageHub.endboss.alert);
         }
     };
+
+    changeDirection = () => {
+        if (this.x <= 100) {
+            this.otherDirection = true;
+        }
+    }
 }

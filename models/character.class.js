@@ -15,6 +15,7 @@ export class Character extends MovableObjekt {
     world;
     lastHit;
     energy = 100;
+    approach = false;
     static otherDirection = false;
     static alive = true;
     static isNearBy = false;
@@ -58,8 +59,10 @@ export class Character extends MovableObjekt {
     }
 
     fightEndboss = () => {
-        if (this.x > 2200) {
+        if (this.x > 2200 && !this.approach) {
+            SoundHub.playOne(SoundHub.endBoss);
             Character.isNearBy = true;
+            this.approach = true;
         }
     };
 
@@ -72,15 +75,15 @@ export class Character extends MovableObjekt {
         ) {
             this.moveRight();
             this.otherDirection = false;
-            Character.otherDirection = false;
+            Character.botleDirection = false;
             this.soundPlayed = false;
         }
 
         // this.x > 0 verhindert, dass der character weiter nach links laufen kann
-        if (Keyboard.LEFT && this.x > 0 && Character.alive) {
+         if (Keyboard.LEFT && this.x > 0 && Character.alive) {
             this.moveLeft();
             this.otherDirection = true;
-            Character.otherDirection = true;
+            Character.botleDirection = true;
         }
 
         // Wir können nur springen wenn unser Character auf dem Boden ist
@@ -94,7 +97,6 @@ export class Character extends MovableObjekt {
     };
 
     startAnimation = () => {
-        // Mit If abfragen können wir die dazugehörigen Bilderabfolgen starten
         if (this.isDead()) {
             SoundHub.pepeWalk.pause();
             this.playAnimation(ImageHub.pepe.dead);

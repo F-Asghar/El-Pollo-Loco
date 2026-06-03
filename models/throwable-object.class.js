@@ -46,7 +46,7 @@ export class ThrowableObject extends MovableObjekt {
     }
 
     checkDirektion() {
-        this.direktionLeft = Character.otherDirection;
+        this.direktionLeft = Character.botleDirection;
     }
 
     throw() {

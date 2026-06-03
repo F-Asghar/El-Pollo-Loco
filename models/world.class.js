@@ -35,6 +35,7 @@ export class World {
     throwableObjects = [];
     isThrowing = false;
     finished = false;
+    end = false;
 
     constructor(canvas) {
         // Mit ctx.getContext("2d") lässt uns Methoden aufrufen für unser Canvas
@@ -65,7 +66,7 @@ export class World {
     }
 
     youLost() {
-        if (this.character.isDead()) {
+        if (this.character.isDead() && !this.end) {
             this.ctx.drawImage(
                 this.imgLost,
                 0,
@@ -73,11 +74,14 @@ export class World {
                 this.canvas.width,
                 this.canvas.height,
             );
+            setTimeout(() => {
+                this.end = false;
+            }, 2000);
         }
     }
 
     youWon() {
-        if (!Endboss.alive) {
+        if (!Endboss.alive && !this.end) {
             this.ctx.drawImage(
                 this.imgWin,
                 0,
@@ -85,6 +89,9 @@ export class World {
                 this.canvas.width,
                 this.canvas.height,
             );
+            setTimeout(() => {
+                this.end = false;
+            }, 2000);
         }
     }
 
@@ -109,7 +116,7 @@ export class World {
         ) {
             // Flasche in die richtige Richtung werfen
             let bottle;
-            if (Character.otherDirection) {
+            if (Character.BotleDirection) {
                 bottle = new ThrowableObject(
                     this.character.x - 20,
                     this.character.y + 100,
@@ -135,8 +142,8 @@ export class World {
             if (
                 this.character.isColliding(enemy) &&
                 !enemy.jumpedOn &&
-                !enemy.isDead() && 
-                !this.character.isAboveGround()
+                !enemy.isDead() &&
+                (!this.character.isAboveGround() || enemy instanceof Endboss)
             ) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
@@ -147,7 +154,11 @@ export class World {
 
     checkCollisionsFromTop() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.isCollidingFromTop(this.character) && !(enemy instanceof Endboss) && !enemy.isHit) {
+            if (
+                enemy.isCollidingFromTop(this.character) &&
+                !(enemy instanceof Endboss) &&
+                !enemy.isHit
+            ) {
                 enemy.enemyHit();
                 enemy.isHit = true;
                 if (enemy.jumpedOn == false && !enemy.hasJumpedOn) {

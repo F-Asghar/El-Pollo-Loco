@@ -5,7 +5,7 @@ export class MovableObjekt extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2.5; // Fallgeschwindigkeit pro FPS
+    acceleration = 2.5; 
     energy;
     soundPlayed = false;
     hurtSound = false;
@@ -17,8 +17,8 @@ export class MovableObjekt extends DrawableObject {
 
     applyGravity = () => {
         if (this.isAboveGround() || this.speedY > 0) {
-            this.y -= this.speedY; // Bewegung der Objekte auf der Y-Achse (Geschwindigkeit * acceleration)
-            this.speedY -= this.acceleration; // Fallgeschwindigkeit pro FPS
+            this.y -= this.speedY; 
+            this.speedY -= this.acceleration; 
         }
     };
 
@@ -34,7 +34,6 @@ export class MovableObjekt extends DrawableObject {
     };
 
     isColliding(mO) {
-        // Es müssen 4 Bedingungen für eine Collission erfüllt sein
         return (
             this.rX + this.rW > mO.rX &&
             this.rY + this.rH > mO.rY &&
@@ -43,9 +42,7 @@ export class MovableObjekt extends DrawableObject {
         );
     }
 
-    // kollision von oben muss überarbeitet werden!!
     isCollidingFromTop(mO) {
-        // Nur ausführen, wenn der Charakter in der Luft ist UND nach unten fällt!
         if (mO.isAboveGround() && mO.speedY <= 0) {
             return (
                 this.rX < mO.rX + mO.rW - 15 &&
@@ -53,11 +50,11 @@ export class MovableObjekt extends DrawableObject {
                 this.rX - 15 + this.rW > mO.rX
             );
         }
-        return false; // Wenn er auf dem Boden läuft oder nach oben springt, passiert nichts
+        return false; 
     }
 
     hit() {
-        this.energy -= 4;
+        this.energy -= 3;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

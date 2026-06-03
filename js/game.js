@@ -118,19 +118,13 @@ function enterFullscreen(element) {
 }
 
 window.addEventListener('resize', () => {
-
     const lockScreen = document.getElementById("lock-screen")
-
     if (window.innerWidth < 600) {
         lockScreen.showModal();
     } else {
         lockScreen.close();
     }
 });
-
-
-
-
 
 
 // JS Doc
