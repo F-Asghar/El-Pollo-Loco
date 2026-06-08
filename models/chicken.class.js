@@ -37,6 +37,11 @@ export class Chicken extends MovableObjekt {
         IntervalHub.startInterval(this.setSound, 1000 / 60);
     }
 
+    /**
+     * Controls the chicken's animation state. Displays the dead sprite, flattens its height,
+     * and anchors it to the ground if dead; otherwise, loops the standard walking animation.
+     * * @requires ImageHub
+     */
     startAnimation = () => {
         if (this.isDead()) {
             this.playAnimation(ImageHub.chickenNormal.dead);
@@ -47,23 +52,37 @@ export class Chicken extends MovableObjekt {
         }
     };
 
+    /**
+     * Handles the horizontal patrol movement of the chicken.
+     * Moves left by default, or right if the direction flag has been inverted,
+     * provided the chicken is still alive.
+     */
     startMovement = () => {
         if (!this.isDead() && !this.otherDirection) {
             this.moveLeft();
-        } else if(!this.isDead() && this.otherDirection) {
-            this.moveRight(); 
+        } else if (!this.isDead() && this.otherDirection) {
+            this.moveRight();
         }
     };
 
+    /**
+     * Inverts the chicken's movement direction flag whenever it hits
+     * the defined left (50px) or right (2400px) boundaries of its patrol route.
+     */
     changeDirection = () => {
         if (this.x <= 50) {
             this.otherDirection = true;
-        }
-        else if (this.x >= 2400) {
+        } else if (this.x >= 2400) {
             this.otherDirection = false;
         }
-    }
+    };
 
+    /**
+     * Triggers the death sound effect exactly once when the chicken dies,
+     * setting a flag to prevent the audio from looping or repeating.
+     * * @global
+     * @requires SoundHub
+     */
     setSound = () => {
         if (this.isDead() && !this.soundPlayed) {
             SoundHub.playOne(SoundHub.enemyDead);

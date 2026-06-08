@@ -1,10 +1,13 @@
-
 export class Keyboard {
     static UP = false;
     static LEFT = false;
     static RIGHT = false;
     static D = false;
 
+    /**
+     * Binds browser window event listeners to handle game input via physical keyboards,
+     * on-screen mobile pointer/touch controls, and input cancellations.
+     */
     static setControls() {
         window.addEventListener("keydown", (e) => {
             if (e.key == " ") {
@@ -27,11 +30,9 @@ export class Keyboard {
             }
             if (e.key == "ArrowLeft") {
                 Keyboard.LEFT = false;
-                // Character.walking_sound_running = false;
             }
             if (e.key == "ArrowRight") {
                 Keyboard.RIGHT = false;
-                // Character.walking_sound_running = false;
             }
             if (e.key == "d") {
                 Keyboard.D = false;
@@ -45,7 +46,6 @@ export class Keyboard {
             if (e.target.id === "btn-throw") Keyboard.D = true;
         });
 
-        // 2. Wenn man den Button loslässt (Finger weg)
         window.addEventListener("pointerup", (e) => {
             if (e.target.id === "btn-up") Keyboard.UP = false;
             if (e.target.id === "btn-left") Keyboard.LEFT = false;
@@ -60,5 +60,4 @@ export class Keyboard {
             Keyboard.D = false;
         });
     }
-
 }

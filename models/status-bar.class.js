@@ -2,40 +2,49 @@ import { DrawableObject } from "./drawable-object.class.js";
 import { ImageHub } from "./imageHub.class.js";
 import { IntervalHub } from "./intervalHub.class.js";
 
-
-export class StatusBar extends DrawableObject{
-    
+export class StatusBar extends DrawableObject {
     x = 0;
     y = 0;
     height = 60;
     width = 200;
     percentage;
 
-    constructor(){
+    constructor() {
         super();
-        this.loadImage("img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png");
+        this.loadImage(
+            "img/7_statusbars/1_statusbar/2_statusbar_health/blue/100.png",
+        );
         this.loadImages(ImageHub.statusBar.health);
         this.setPercentage(100);
     }
 
-    setPercentage(percentage){
+    /**
+     * Updates the health percentage, resolves the corresponding image index,
+     * and sets the active asset from the image cache.
+     * @param {number} percentage - The current health value (0 to 100).
+     */
+    setPercentage(percentage) {
         this.percentage = percentage;
         let path = ImageHub.statusBar.health[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    resolveImageIndex(){
-        if(this.percentage == 100){
+    /**
+     * Resolves the correct image index (0 to 5) based on the current health percentage.
+     * @returns {number} The array index of the matching status bar image.
+     */
+    resolveImageIndex() {
+        if (this.percentage == 100) {
             return 5;
-        } else if(this.percentage >= 80){
+        } else if (this.percentage >= 80) {
             return 4;
-        }else if(this.percentage >= 60){
+        } else if (this.percentage >= 60) {
             return 3;
-        }else if(this.percentage >= 40){
+        } else if (this.percentage >= 40) {
             return 2;
-        }else if(this.percentage >= 20){
+        } else if (this.percentage >= 20) {
             return 1;
-        }else {
+        } else {
             return 0;
         }
     }

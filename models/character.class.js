@@ -37,9 +37,7 @@ export class Character extends MovableObjekt {
     rH;
 
     constructor() {
-        // Ein Bild muss geladen werden, damit es standardmäßig etwas anzeigt, noch bevor man etwas drückt
         super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
-        // Bilder müssen im constructor vorgeladen werden, um sie später verwenden zu können.
         this.loadImages(ImageHub.pepe.walk);
         this.loadImages(ImageHub.pepe.jump);
         this.loadImages(ImageHub.pepe.dead);
@@ -58,6 +56,14 @@ export class Character extends MovableObjekt {
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
     }
 
+    /**
+     * Triggers the endboss battle sequences when the character passes a specific
+     * X-coordinate threshold for the first time, playing the boss theme music
+     * and updating proximity states.
+     * * @global
+     * @requires SoundHub
+     * @requires Character
+     */
     fightEndboss = () => {
         if (this.x > 2200 && !this.approach) {
             SoundHub.playOne(SoundHub.endBoss);
@@ -66,55 +72,68 @@ export class Character extends MovableObjekt {
         }
     };
 
+    /**
+     * Handles the character's movement and jumping based on keyboard input,
+     * and updates the camera position.
+     */
     startMovement = () => {
-        // Mit this.world.level.level_end_x verhindern wir, dass der Character weiter nach rechts laufen kann (Ende vom Level)
         if (
             Keyboard.RIGHT &&
             this.x < this.world.level.level_end_x &&
             Character.alive
         ) {
-            this.moveRight();
-            this.otherDirection = false;
-            Character.botleDirection = false;
-            this.soundPlayed = false;
+            this.handleMoveRight();
         }
-
-        // this.x > 0 verhindert, dass der character weiter nach links laufen kann
-         if (Keyboard.LEFT && this.x > 0 && Character.alive) {
-            this.moveLeft();
-            this.otherDirection = true;
-            Character.botleDirection = true;
+        if (Keyboard.LEFT && this.x > 0 && Character.alive) {
+            this.handleMoveLeft();
         }
-
-        // Wir können nur springen wenn unser Character auf dem Boden ist
         if (Keyboard.UP && !this.isAboveGround() && Character.alive) {
-            this.jump();
-            this.soundPlayed = false;
+            this.handleJump();
         }
-        // Hiermit fixieren wir die Camera auf unseren Character
-        //  + 100 rückt die Camera etwas weiter nach links, damit Pepe weiter rechts angezeigt wird.
         this.world.camera_x = -this.x + 100;
     };
 
+    /**
+     * Executes the rightward movement and resets the direction flags.
+     */
+    handleMoveRight() {
+        this.moveRight();
+        this.otherDirection = false;
+        Character.botleDirection = false;
+        this.soundPlayed = false;
+    }
+
+    /**
+     * Executes the leftward movement and sets the direction flags.
+     */
+    handleMoveLeft() {
+        this.moveLeft();
+        this.otherDirection = true;
+        Character.botleDirection = true;
+    }
+
+    /**
+     * Makes the character jump and resets the jump sound flag.
+     */
+    handleJump() {
+        this.jump();
+        this.soundPlayed = false;
+    }
+    
+    /**
+     * Controls the character's animation state machine based on game events
+     * (death, jumping, getting hurt, moving, or idling).
+     */
     startAnimation = () => {
         if (this.isDead()) {
-            SoundHub.pepeWalk.pause();
-            this.playAnimation(ImageHub.pepe.dead);
-            Character.alive = false;
-            // hier alle animationen und intervalle stoppen und löschen!
-            setTimeout(() => {
-                IntervalHub.stopAllIntervals();
-                SoundHub.stopAll();
-            }, 1200);
-        } else if (this.isAboveGround()) {
-            this.playAnimation(ImageHub.pepe.jump);
-            this.long();
-        } else if (this.isHurt()) {
-            this.playAnimation(ImageHub.pepe.hurt);
-            this.long();
-        } else if (Keyboard.RIGHT || Keyboard.LEFT) {
-            this.playAnimation(ImageHub.pepe.walk);
-            this.long();
+            this.handleDeathAnimation();
+        } else if (
+            this.isAboveGround() ||
+            this.isHurt() ||
+            Keyboard.RIGHT ||
+            Keyboard.LEFT
+        ) {
+            this.handleActiveAnimations();
         } else if (this.isWaitingLong()) {
             this.playAnimation(ImageHub.pepe.long);
         } else {
@@ -122,50 +141,147 @@ export class Character extends MovableObjekt {
         }
     };
 
+    /**
+     * Handles the death sequence by pausing movement sounds, playing the dead animation,
+     * setting the character status, and triggering a delayed game loop shutdown.
+     * * @requires SoundHub
+     * * @requires IntervalHub
+     * * @requires Character
+     */
+    handleDeathAnimation() {
+        SoundHub.pepeWalk.pause();
+        this.playAnimation(ImageHub.pepe.dead);
+        Character.alive = false;
+        setTimeout(() => {
+            IntervalHub.stopAllIntervals();
+            SoundHub.stopAll();
+        }, 1200);
+    }
+
+    /**
+     * Handles active movement and reaction animations (jumping, getting hurt, or walking)
+     * and resets the idle/long-waiting timer.
+     */
+    handleActiveAnimations() {
+        if (this.isAboveGround()) {
+            this.playAnimation(ImageHub.pepe.jump);
+        } else if (this.isHurt()) {
+            this.playAnimation(ImageHub.pepe.hurt);
+        } else if (Keyboard.RIGHT || Keyboard.LEFT) {
+            this.playAnimation(ImageHub.pepe.walk);
+        }
+        this.long();
+    }
+
+    /**
+     * Updates the timestamp of the last registered player input to the current time.
+     * This resets the idle timer for the character.
+     * * @global
+     * @requires Character
+     */
     long() {
         Character.lastKeypressed = new Date().getTime();
     }
 
+    /**
+     * Calculates the time passed since the last player input and checks if
+     * the character has been idling for longer than 5 seconds.
+     * * @returns {boolean} True if the character has been waiting for more than 5 seconds, otherwise false.
+     * @global
+     * @requires Character
+     */
     isWaitingLong() {
-        let timePassed = new Date().getTime() - Character.lastKeypressed; // Differenz in ms
-        timePassed = timePassed / 1000; // Differenz in Sekunden
+        let timePassed = new Date().getTime() - Character.lastKeypressed;
+        timePassed = timePassed / 1000;
         return timePassed > 5;
     }
 
+    /**
+     * Makes the character jump by applying upward vertical velocity,
+     * plays the jumping sound effect, and stops the sleeping sound effect.
+     * * @global
+     * @requires SoundHub
+     */
     jump() {
         this.speedY = 30;
         SoundHub.playOne(SoundHub.pepeJump);
         SoundHub.stopOne(SoundHub.pepeSleep);
     }
 
+    /**
+     * Manages the character's situational sound effects (hurt, sleeping, and death)
+     * based on the character's state, preventing sounds from overlapping using custom timeouts.
+     */
     setSoundSlow = () => {
         if (this.isHurt() && !this.hurtSound) {
-            SoundHub.playOne(SoundHub.pepeHurt);
-            SoundHub.stopOne(SoundHub.pepeSleep);
-            this.hurtSound = true;
-            setTimeout(() => {
-                this.hurtSound = false;
-            }, 2000);
+            this.handleHurtSound();
         } else if (this.isWaitingLong() && !this.soundPlayed) {
-            SoundHub.playOne(SoundHub.pepeSleep);
-            this.soundPlayed = true;
-            setTimeout(() => {
-                this.soundPlayed = false;
-            }, 5000);
+            this.handleSleepSound();
         } else if (!this.deadSound && !Character.alive) {
-            SoundHub.allSounds = [];
-            SoundHub.playOne(SoundHub.pepeDead);
-            this.deadSound = true;
-            setTimeout(() => {
-                this.deadSound = false;
-            }, 2500);
+            this.handleDeathSound();
         }
     };
 
+    /**
+     * Plays the character's hurt sound effect, silences the sleep sound,
+     * and sets a 2-second cooldown before it can play again.
+     * * @requires SoundHub
+     */
+    handleHurtSound() {
+        SoundHub.playOne(SoundHub.pepeHurt);
+        SoundHub.stopOne(SoundHub.pepeSleep);
+        this.hurtSound = true;
+        setTimeout(() => {
+            this.hurtSound = false;
+        }, 2000);
+    }
+
+    /**
+     * Plays the character's sleeping sound effect when idling long
+     * and sets a 5-second cooldown before it can trigger again.
+     * * @requires SoundHub
+     */
+    handleSleepSound() {
+        SoundHub.playOne(SoundHub.pepeSleep);
+        this.soundPlayed = true;
+        setTimeout(() => {
+            this.soundPlayed = false;
+        }, 5000);
+    }
+
+    /**
+     * Clears all active game sounds, plays the character's death sound effect,
+     * and sets a 2.5-second cooldown.
+     * * @global
+     * @requires SoundHub
+     * @requires Character
+     */
+    handleDeathSound() {
+        SoundHub.allSounds = [];
+        SoundHub.playOne(SoundHub.pepeDead);
+        this.deadSound = true;
+        setTimeout(() => {
+            this.deadSound = false;
+        }, 2500);
+    }
+
+    /**
+     * Controls the character's walking sound effect. Plays the sound if the character
+     * is moving on the ground, and pauses it immediately when movement stops.
+     * * @global
+     * @requires Keyboard
+     * @requires SoundHub
+     * @requires Character
+     */
     pepeWalkSound = () => {
         const isMoving =
             (Keyboard.LEFT || Keyboard.RIGHT) && !this.isAboveGround();
-        if (isMoving && SoundHub.pepeWalk.paused && Character.alive && !SoundHub.muted) {
+        if (
+            isMoving &&
+            SoundHub.pepeWalk.paused &&
+            Character.alive &&
+            !SoundHub.muted
+        ) {
             SoundHub.pepeWalk.play();
             SoundHub.stopOne(SoundHub.pepeSleep);
         } else if (!isMoving) {

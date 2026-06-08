@@ -24,12 +24,25 @@ window.volume = volume;
 window.finished = finished;
 window.home = home;
 
+/**
+ * Initializes the main game components by capturing the canvas element,
+ * creating the game world instance, and binding keyboard controls.
+ * * @global
+ * @requires World
+ * @requires Keyboard
+ */
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
 }
 
+/**
+ * Starts the game by resetting and hiding the menu/dialog overlays,
+ * initializing the level layout and game objects, and playing the start sound.
+ * * @global
+ * @requires SoundHub
+ */
 function startGame() {
     const start = document.getElementById("start-screen");
     const dialogref = document.getElementById("restart-home");
@@ -38,10 +51,20 @@ function startGame() {
     dialogref.style.display = "none";
     start.style.display = "none";
     initLevel();
-    init(); 
+    init();
     SoundHub.playOne(SoundHub.gameStart);
 }
 
+
+/**
+ * Checks if the game has concluded (either the player or the endboss is dead).
+ * If the game is over, it waits 2 seconds before resetting character states,
+ * stopping the music, and displaying the game-over/restart dialog overlay.
+ * * @global
+ * @requires Character
+ * @requires Endboss
+ * @requires SoundHub
+ */
 function finished() {
     if (!Character.alive || !Endboss.alive) {
         setTimeout(() => {
@@ -56,6 +79,9 @@ function finished() {
     }
 }
 
+/**
+ * Resets and closes the restart/home dialog overlay.
+ */
 function home() {
     const endRef = document.getElementById("restart-home");
     endRef.close();
@@ -63,6 +89,11 @@ function home() {
     endRef.style.display = "none";
 }
 
+/**
+ * Opens a modal dialog by its ID and dynamically injects the correct HTML template
+ * based on whether it is the legal information, controls layout, or restart menu.
+ * * @param {string} id - The HTML ID attribute of the dialog element to be opened.
+ */
 function openDialog(id) {
     const openDialogRef = document.getElementById(id);
     openDialogRef.innerHTML = "";
@@ -80,12 +111,21 @@ function openDialog(id) {
     }
 }
 
+/**
+ * Closes a modal dialog by its ID and clears out its inner HTML contents.
+ * * @param {string} id - The HTML ID attribute of the dialog element to be closed.
+ */
 function closeDialog(id) {
     const openDialogRef = document.getElementById(id);
     openDialogRef.close();
     openDialogRef.innerHTML = "";
 }
 
+/**
+ * Mutes all game audio tracks and toggles the visible control buttons 
+ * to show the volume icon instead of the mute icon.
+ * * @requires SoundHub
+ */
 function mute() {
     SoundHub.stopAll();
     const muteRef = document.getElementById("mute-button");
@@ -94,6 +134,11 @@ function mute() {
     volumeRef.style.display = "block";
 }
 
+/**
+ * Unmutes/plays all game audio tracks and toggles the visible control buttons 
+ * to show the mute icon instead of the volume icon.
+ * * @requires SoundHub
+ */
 function volume() {
     SoundHub.playAll();
     const muteRef = document.getElementById("mute-button");
@@ -102,11 +147,19 @@ function volume() {
     volumeRef.style.display = "none";
 }
 
+/**
+ * Requests to trigger fullscreen mode specifically for the game canvas element.
+ */
 function fullscreen() {
     const fullscreenRef = document.getElementById("canvas");
     enterFullscreen(fullscreenRef);
 }
 
+/**
+ * Cross-browser helper function that requests the browser to display 
+ * a given HTML element in full-screen mode.
+ * * @param {HTMLElement} element - The DOM element to be scaled to full screen.
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -117,16 +170,16 @@ function enterFullscreen(element) {
     }
 }
 
-window.addEventListener('resize', () => {
-    const lockScreen = document.getElementById("lock-screen")
+/**
+ * Event listener that monitors window resizing. It automatically opens a full-screen
+ * blocking modal if the screen width drops below 600px (e.g., forcing mobile rotation), 
+ * and closes it when the screen is wide enough.
+ */
+window.addEventListener("resize", () => {
+    const lockScreen = document.getElementById("lock-screen");
     if (window.innerWidth < 600) {
         lockScreen.showModal();
     } else {
         lockScreen.close();
     }
 });
-
-
-// JS Doc
-// toten code entfernen
-// Methoden Kürzen maximal 14 zeilen!!

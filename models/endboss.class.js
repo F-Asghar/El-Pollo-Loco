@@ -43,15 +43,27 @@ export class Endboss extends MovableObjekt {
         IntervalHub.startInterval(this.changeDirection, 1000 / 60);
     }
 
+    /**
+     * Handles the horizontal movement of the endboss.
+     * Moves left if the player is nearby, or right if the direction flag is inverted,
+     * provided the boss is still alive.
+     * * @global
+     * @requires Character
+     */
     startMovement = () => {
         if (Character.isNearBy && !this.isDead() && !this.otherDirection) {
             this.moveLeft();
-        } 
-        else if(!this.isDead() && this.otherDirection) {
-            this.moveRight(); 
+        } else if (!this.isDead() && this.otherDirection) {
+            this.moveRight();
         }
     };
 
+    /**
+     * Manages the endboss sound effects. Triggers a hurt sound with a 2-second cooldown,
+     * and plays a final death sound that stops all audio after 600ms.
+     * * @global
+     * @requires SoundHub
+     */
     setSound = () => {
         if (this.isHurt() && !this.hurtSound) {
             SoundHub.playOne(SoundHub.enemyHit);
@@ -67,7 +79,16 @@ export class Endboss extends MovableObjekt {
             }, 600);
         }
     };
-    
+
+    /**
+     * Controls the endboss animation loop and state switches (death sequence,
+     * getting hurt, walking, or staying alert).
+     * * @global
+     * @requires ImageHub
+     * @requires Endboss
+     * @requires Character
+     * @requires IntervalHub
+     */
     startAnimation = () => {
         if (this.isDead()) {
             this.playAnimation(ImageHub.endboss.dead);
@@ -85,9 +106,13 @@ export class Endboss extends MovableObjekt {
         }
     };
 
+    /**
+     * Forces the endboss to turn around and move right once it reaches
+     * the left map boundary (100px).
+     */
     changeDirection = () => {
         if (this.x <= 100) {
             this.otherDirection = true;
         }
-    }
+    };
 }

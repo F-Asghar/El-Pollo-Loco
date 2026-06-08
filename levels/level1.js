@@ -8,6 +8,21 @@ import { ImageHub } from "../models/imageHub.class.js";
 import { Level } from "../models/level.class.js";
 
 export let level1;
+
+/**
+ * Initializes the first level of the game (Level 1).
+ * Creates a new instance of the `Level` class and populates it with all
+ * necessary game objects, including enemies, clouds, background layers,
+ * collectable coins, and bottles.
+ * * @global
+ * @requires Level
+ * @requires Chicken
+ * @requires Endboss
+ * @requires Cloud
+ * @requires BackgroundObject
+ * @requires CollectableCoins
+ * @requires CollectableBotle
+ */
 export function initLevel() {
     level1 = new Level(
         [

@@ -10,7 +10,6 @@ header {
     top: 30px;
     width: 100%;
     text-align: center;
-    /* z-index: 10; */
     color: #f6f6ec;
 }
 
@@ -62,7 +61,6 @@ canvas {
     width: 100%;
     height: 100%;
     z-index: 5;
-    /* display: none; */
 }
 
 .game-buttons {
@@ -106,19 +104,52 @@ canvas {
 #start-screen {
     width: inherit;
     height: inherit;
-    /* background-image: url("./img/start-screen/start-screen.jpg"); */
     background-image: url("./img/9_intro_outro_screens/start/startscreen_1.png");
-    /* background-size: contain; */
     background-size: cover;
-    background-position: right;
+    background-position: center;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    /* align-items: flex-end; */
-    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
     position: absolute;
     z-index: 10;
     top: 0;
+    padding: 0px 24px;
+}
+
+.home-content {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+    text-align: center;
+    white-space: nowrap;
+    gap: 8px;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+
+    &:hover {
+        cursor: pointer;
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.8));
+    }
+}
+
+.start-buttons {
+    display: flex;
+    width: clamp(40px, 10vw, 100px);
+    height: clamp(40px, 10vw, 100px);
+}
+
+.home-buttons {
+    display: flex;
+    width: clamp(40px, 10vw, 100px);
+    height: clamp(40px, 10vw, 100px);
+
+    &:hover {
+        cursor: pointer;
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.8));
+    }
 }
 
 #lock-screen {
@@ -131,7 +162,7 @@ canvas {
     padding: 0;
     background-color: black;
     color: white;
-    z-index: 10000; /* Sicher ist sicher */
+    z-index: 10000;
 
     div {
         width: inherit;
@@ -156,22 +187,6 @@ canvas {
     }
     to {
         rotate: 0deg;
-    }
-}
-
-.home-content {
-    width: 20%;
-    height: 50%;
-    text-align: center;
-}
-
-.home-buttons {
-    width: clamp(40px, 10vw, 100px);
-    height: clamp(40px, 10vw, 100px);
-
-    &:hover {
-        cursor: pointer;
-        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.8));
     }
 }
 
@@ -255,7 +270,7 @@ h3 {
 }
 
 h4 {
-    font-size: clamp(16px, 3.5vw, 32px);
+    font-size: clamp(16px, 3.5vw, 20px);
 }
 
 @media only screen and (max-width: 720px) {

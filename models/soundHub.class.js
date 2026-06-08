@@ -1,6 +1,4 @@
 export class SoundHub {
-    // Audiodateien
-
     static muted = false;
     static playing = true;
 
@@ -15,29 +13,38 @@ export class SoundHub {
     static endBoss = new Audio("./sounds/endboss/endbossApproach.wav");
 
     static collectCoins = new Audio("./sounds/collectibles/collectSound.wav");
-    static collectBottle = new Audio("./sounds/collectibles/bottleCollectSound.wav");
+    static collectBottle = new Audio(
+        "./sounds/collectibles/bottleCollectSound.wav",
+    );
     static bottleBreak = new Audio("./sounds/throwable/bottleBreak.mp3");
     static gameStart = new Audio("./sounds/game/gameStart.mp3");
 
-    // Array, das alle definierten Audio-Dateien enthält
+    /**
+     * Array storing all currently tracked audio instances.
+     * @type {HTMLAudioElement[]}
+     */
     static allSounds = [];
 
-    // Spielt eine einzelne Audiodatei ab
+    /**
+     * Plays a single sound from the beginning if audio is enabled.
+     * @param {HTMLAudioElement} sound - The audio object to play.
+     */
     static playOne(sound) {
         if (SoundHub.playing) {
-            // instrumentId nur wichtig für die Visualisierung
-            sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
-            sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
-            sound.play(); // Spielt das übergebene Sound-Objekt ab
+            sound.volume = 0.2;
+            sound.currentTime = 0;
+            sound.play();
             this.allSounds.push(sound);
         }
     }
 
-    // Stoppt das Abspielen aller Audiodateien
+    /**
+     * Pauses all tracked sounds and updates global state flags to muted.
+     */
     static stopAll() {
         if (!SoundHub.muted) {
             SoundHub.allSounds.forEach((sound) => {
-                sound.pause(); // Pausiert jedes Audio in der Liste
+                sound.pause();
                 sound.volume = 0.0;
                 SoundHub.muted = true;
                 SoundHub.playing = false;
@@ -45,25 +52,23 @@ export class SoundHub {
         }
     }
 
-static resetSound() {
-    // 1. Alle laufenden Sounds stoppen
-    this.allSounds.forEach((sound) => {
-        sound.pause();        // Beendet die Wiedergabe
-        sound.currentTime = 0; // Setzt den Sound an den Anfang zurück
-    });
+    /**
+     * Resets the entire sound hub state, clearing and pausing all tracked audio.
+     */
+    static resetSound() {
+        this.allSounds.forEach((sound) => {
+            sound.pause();
+            sound.currentTime = 0;
+        });
+        this.allSounds = [];
+        SoundHub.muted = false;
+        SoundHub.playing = true;
+        this.defaultVolume = 0.2;
+    }
 
-    // 2. Das Array komplett leeren (löscht die Referenzen)
-    this.allSounds = [];
-
-    // 3. Auf Standardeinstellungen zurücksetzen
-    SoundHub.muted = false;
-    SoundHub.playing = true;
-    
-    // Falls du eine globale Standard-Lautstärke für neue Sounds willst:
-    // (Achte darauf, dass diese Variable auch existiert)
-    this.defaultVolume = 0.2; 
-}
-
+    /**
+     * Restores volume for all tracked audio instances if audio was disabled.
+     */
     static playAll() {
         if (!SoundHub.playing) {
             SoundHub.allSounds.forEach((sound) => {
@@ -74,23 +79,11 @@ static resetSound() {
         }
     }
 
-    // Stoppt das Abspielen einer einzelnen Audiodatei
+    /**
+     * Pauses a specific audio instance.
+     * @param {HTMLAudioElement} sound - The audio object to stop.
+     */
     static stopOne(sound) {
-        sound.pause(); // Pausiert das übergebene Audio
-    }
-
-    // ##########################################################################################################################
-    // ################################################  Sound Slider - BONUS !  ################################################
-    // Setzt die Lautstärke für alle Audiodateien
-    static objSetVolume(volumeSlider) {
-        let volumeValue = document.getElementById("volume").value; // Holt den aktuellen Lautstärkewert aus dem Inputfeld
-        volumeSlider.forEach((sound) => {
-            sound.volume = volumeValue; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
-        });
+        sound.pause();
     }
 }
-
-
-
-
-// Soundhub zeigt Fehlermeldung, ist noch nicht zu Ende geladen prüfen!

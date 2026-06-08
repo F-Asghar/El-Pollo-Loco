@@ -1,4 +1,3 @@
-
 export class DrawableObject {
     x;
     y;
@@ -6,30 +5,36 @@ export class DrawableObject {
     width;
     img;
     currentImage = 0;
-    imageCache = {}
+    imageCache = {};
 
-   
-    loadImage(path){
-        // this.img = document.getElementById ("image") <img id="image" src"""> / ist das selbe nur für JS
-        this.img = new Image(); 
+    /**
+     * Creates a new HTMLImageElement and sets its source path to load a single texture.
+     * * @param {string} path - The file path string of the image to be loaded.
+     */
+    loadImage(path) {
+        this.img = new Image();
         this.img.src = path;
     }
 
-    // Um uns unsere Bilder anzeigen zu lassen mit x und y Achse, Breite und Höhe
-    draw(ctx){
+    /**
+     * Renders the object's active image onto the game canvas using its
+     * current X/Y coordinates and width/height dimensions.
+     * * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the canvas.
+     */
+    draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-
-    loadImages(arr){
+    /**
+     * Preloads an array of image paths and stores the loaded HTMLImageElements
+     * inside the centralized image cache object.
+     * * @param {string[]} arr - An array containing the file path strings of the images to preload.
+     */
+    loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
             img.src = path;
-            // this bezieht sich auf eine globale Variable in der Klasse (Attribut)! 
-            // Alles was nur in der Funktion gültig ist wird ohne this geschrieben.
             this.imageCache[path] = img;
         });
     }
-
-
 }

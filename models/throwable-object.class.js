@@ -41,14 +41,25 @@ export class ThrowableObject extends MovableObjekt {
         IntervalHub.startInterval(this.splash, 1000 / 60);
     }
 
+    /**
+     * Overrides the base ground check, as a thrown bottle is always considered in the air.
+     * @returns {boolean} Always true.
+     */
     isAboveGround() {
         return true;
     }
 
+    /**
+     * Synchronizes the bottle's flight direction with the character's current facing direction.
+     */
     checkDirektion() {
         this.direktionLeft = Character.botleDirection;
     }
 
+    /**
+     * Initializes the bottle throw mechanics by resetting the cooldown timer,
+     * setting initial speeds, starting physics loops, and decrementing the ammo counter.
+     */
     throw() {
         Character.lastKeypressed = new Date().getTime();
         this.speedY = 30;
@@ -58,6 +69,9 @@ export class ThrowableObject extends MovableObjekt {
         BotleBar.pice--;
     }
 
+    /**
+     * Handles the horizontal flight movement of the bottle based on its resolved direction.
+     */
     startXMovement = () => {
         if (this.direktionLeft) {
             this.x -= this.speedX;
@@ -66,12 +80,19 @@ export class ThrowableObject extends MovableObjekt {
         }
     };
 
+    /**
+     * Plays the continuous spinning animation frames of the bottle while it is mid-air.
+     */
     startRotation = () => {
         if (!this.alreadySplashed) {
-        this.playAnimation(ImageHub.botle.botleRotation);
-    }
+            this.playAnimation(ImageHub.botle.botleRotation);
+        }
     };
 
+    /**
+     * Triggers the shattering sequence on impact, stopping all physics movement
+     * and playing the splash animation once.
+     */
     splash = () => {
         if (this.bottleCollided && !this.alreadySplashed) {
             this.speedX = 0;

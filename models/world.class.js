@@ -38,8 +38,6 @@ export class World {
     end = false;
 
     constructor(canvas) {
-        // Mit ctx.getContext("2d") lässt uns Methoden aufrufen für unser Canvas
-        // (stell es dir vor wie async und await bei Funktionen). Wichtig! >> ctx als Variable immer so nehmen!
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.level = level1;
@@ -50,21 +48,35 @@ export class World {
         IntervalHub.startInterval(this.run, 1000 / 60);
     }
 
+    /**
+     * Passes a reference of the current world instance to the main character.
+     */
     setWorld() {
-        // this ist die Instanz selbst! (Hier wird die gesammte instanzierung der Klasse World übergeben)
         this.character.world = this;
     }
 
+    /**
+     * Triggers the global or external end-of-game process.
+     */
     gameFinished() {
         finished();
     }
 
+    /**
+     * Creates a new HTMLImageElement, starts loading a texture path, and returns the object.
+     * @param {string} path - The file path string of the image.
+     * @returns {HTMLImageElement} The created image object instance.
+     */
     loadImage(path) {
         const img = new Image();
         img.src = path;
         return img;
     }
 
+    /**
+     * Renders the game-over screen overlay if the character dies, and resets 
+     * the end flag after a 2-second timeout delay.
+     */
     youLost() {
         if (this.character.isDead() && !this.end) {
             this.ctx.drawImage(
@@ -80,6 +92,10 @@ export class World {
         }
     }
 
+    /**
+     * Renders the victory screen overlay if the endboss is defeated, and resets 
+     * the end flag after a 2-second timeout delay.
+     */
     youWon() {
         if (!Endboss.alive && !this.end) {
             this.ctx.drawImage(
@@ -95,6 +111,10 @@ export class World {
         }
     }
 
+    /**
+     * The primary game physics and state processing loop. Coordinates collision checks, 
+     * input detection, and end-game state evaluations.
+     */
     run = () => {
         this.checkCollisionsFromTop();
         this.checkCollisions();
@@ -107,6 +127,10 @@ export class World {
         this.gameFinished();
     };
 
+    /**
+     * Checks if the player spawns a throwable bottle based on inputs and ammo, 
+     * and resets the throw state when the key is released.
+     */
     checkThrowObjects = () => {
         if (
             Keyboard.D &&
@@ -114,22 +138,8 @@ export class World {
             !this.isThrowing &&
             Character.alive
         ) {
-            // Flasche in die richtige Richtung werfen
-            let bottle;
-            if (Character.BotleDirection) {
-                bottle = new ThrowableObject(
-                    this.character.x - 20,
-                    this.character.y + 100,
-                );
-            } else {
-                bottle = new ThrowableObject(
-                    this.character.x + 70,
-                    this.character.y + 100,
-                );
-            }
-            this.throwableObjects.push(bottle);
+            this.createNewBottle();
             this.botleBar.setPice(BotleBar.pice);
-            //damit nicht mehrfach geworfen wird
             this.isThrowing = true;
         }
         if (!Keyboard.D) {
@@ -137,6 +147,31 @@ export class World {
         }
     };
 
+    /**
+     * Instantiates a new ThrowableObject at the correct X/Y coordinates 
+     * based on the character's facing direction and adds it to the tracking array.
+     */
+    createNewBottle() {
+        let bottle;
+        if (Character.botleDirection) {
+            bottle = new ThrowableObject(
+                this.character.x - 10,
+                this.character.y + 100,
+            );
+        } else {
+            bottle = new ThrowableObject(
+                this.character.x + 70,
+                this.character.y + 100,
+            );
+        }
+        this.throwableObjects.push(bottle);
+    }
+
+
+    /**
+     * Loops through all level enemies to check for standard horizontal collisions 
+     * where the character takes damage.
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (
@@ -152,6 +187,10 @@ export class World {
         });
     }
 
+    /**
+     * Loops through all level enemies to check if the character successfully 
+     * jumps on top of them to defeat them.
+     */
     checkCollisionsFromTop() {
         this.level.enemies.forEach((enemy) => {
             if (
@@ -169,6 +208,10 @@ export class World {
         });
     }
 
+
+    /**
+     * Loops through all enemies and active throwable bottles to check for impacts.
+     */
     checkCollisionsThrowBotel() {
         this.level.enemies.forEach((enemy) => {
             this.throwableObjects.forEach((botle) => {
@@ -177,23 +220,46 @@ export class World {
                     !botle.bottleCollided &&
                     !enemy.isDead()
                 ) {
-                    botle.bottleCollided = true;
-                    enemy.enemyHit();
-                    SoundHub.playOne(SoundHub.bottleBreak);
-                    setTimeout(() => {
-                        let i = this.throwableObjects.indexOf(botle);
-                        if (i > -1) {
-                            this.throwableObjects.splice(i, 1);
-                        }
-                    }, 250);
-                    if (enemy instanceof Endboss) {
-                        this.endbossBar.setPercentage(enemy.energy);
-                    }
+                    this.handleBottleImpact(botle, enemy);
                 }
             });
         });
     }
 
+    /**
+     * Processes the impact of a bottle hitting an enemy by triggering damage, 
+     * playing sound effects, and updating the UI if the endboss was struck.
+     * @param {Object} botle - The bottle object that hit the enemy.
+     * @param {Object} enemy - The enemy object that was hit.
+     */
+    handleBottleImpact(botle, enemy) {
+        botle.bottleCollided = true;
+        enemy.enemyHit();
+        SoundHub.playOne(SoundHub.bottleBreak);
+        this.removeBottle(botle);
+        if (enemy instanceof Endboss) {
+            this.endbossBar.setPercentage(enemy.energy);
+        }
+    }
+
+    /**
+     * Removes the collided bottle from the tracking array after a short delay 
+     * to allow the splash animation to finish playing.
+     * @param {Object} botle - The bottle object to remove.
+     */
+    removeBottle(botle) {
+        setTimeout(() => {
+            let i = this.throwableObjects.indexOf(botle);
+            if (i > -1) {
+                this.throwableObjects.splice(i, 1);
+            }
+        }, 250);
+    }
+
+    /**
+     * Loops through all coins in the level to check for collisions with the character,
+     * increments the coin counter, updates the UI, plays sound, and removes the collected coin.
+     */
     checkCollisionsCoins() {
         this.level.coins.forEach((coins, index) => {
             if (this.character.isColliding(coins)) {
@@ -205,6 +271,10 @@ export class World {
         });
     }
 
+    /**
+     * Loops through all bottles in the level to check for collisions with the character,
+     * increments the bottle counter, updates the UI, plays sound, and removes the collected bottle.
+     */
     checkCollisionsBotle() {
         this.level.botle.forEach((botle, index) => {
             if (this.character.isColliding(botle)) {
@@ -216,16 +286,13 @@ export class World {
         });
     }
 
+    /**
+     * Clears the canvas and handles the entire rendering loop, including camera translation,
+     * drawing game objects, UI elements, game-over/victory screens, and schedules the next frame.
+     */
     draw() {
-        // mit dieser Methode (clearRect(unserem canvas wie unten)) clearen wir den Canvas und können,
-        // wenn wir die Position von unseres movable-objekt verändern ohne das es sich doppelt.
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Wir verschieben unsere camera nach rechts ,0 ist die Y-Achse,
-        // die wir natürlich nicht verschieben wollen (muss aber angegeben werden!)
         this.ctx.translate(this.camera_x, 0);
-
-        // mit addObjectstoMap lassen wir anderst als beim character (addToMap) eine forEach schleife drüber laufen
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
@@ -234,64 +301,63 @@ export class World {
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.botle);
         this.addToMap(this.character);
-
-        // Hier verschieben wir unsere Camera wieder nach links ,0 ist die Y-Achse,
-        // die wir natürlich nicht verschieben wollen (muss aber angegeben werden!)
         this.ctx.translate(-this.camera_x, 0);
-
-        // --------- Space for fixed Objects --------
         this.addToMap(this.coinsBar);
         this.addToMap(this.statusBar);
         this.addToMap(this.botleBar);
         this.addToMap(this.endbossBar);
-
         this.youLost();
         this.youWon();
-
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
-
-        // () => Arrow-Function bindet die draw-methode an die Instanz der World-Class)
         requestAnimationFrame(() => this.draw());
     }
 
-    // damit lassen wir uns alle unsere Gegner / Hintergründe ect. anzeigen (wir rendern z.b. alle 3 chickens! / forEach)
+    /**
+     * Iterates over a collection of game objects and draws each one onto the map.
+     * @param {Object[]} objects - An array of game objects to be drawn.
+     */
     addObjectsToMap(objects) {
         objects.forEach((o) => {
             this.addToMap(o);
         });
     }
 
-    // mo in dem Fall MovableObject
-    // Diese funktion wird in addObjectsToMap ebenfalls aufgerufen
+    /**
+     * Draws a single game object onto the canvas context, handling image flipping 
+     * if the object is facing the opposite direction.
+     * @param {Object} mo - The movable or standard object to draw.
+     */
     addToMap(mo) {
-        // Um Character zu spiegeln die Methoden sind von ctx vorgefertigt
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
-        // drawImage ist vorgefertigt von JS // hier fügen wir den character ein
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
 
+    /**
+     * Saves the canvas state, translates and scales the context to horizontally 
+     * mirror the image, and inverts the object's X coordinate.
+     * @param {Object} mo - The object whose image needs to be flipped.
+     */
     flipImage(mo) {
-        // speichern der aktuellen Einstellungen von unserem Kontext (Bild)
         this.ctx.save();
-        // einfügen des Bildes an der richtigen X-Achse Stelle
         this.ctx.translate(mo.width, 0);
-        // spiegeln an der Achse
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores the object's original X coordinate and reverts the canvas context 
+     * back to its last saved state.
+     * @param {Object} mo - The object whose image was flipped.
+     */
     flipImageBack(mo) {
-        // Hier werden die Einstellungen für das spiegeln sofern wir sie verändert haben wieder rückgängig gemacht
         mo.x = mo.x * -1;
         this.ctx.restore();
     }

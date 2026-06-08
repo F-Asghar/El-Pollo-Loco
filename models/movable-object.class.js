@@ -5,7 +5,7 @@ export class MovableObjekt extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2.5; 
+    acceleration = 2.5;
     energy;
     soundPlayed = false;
     hurtSound = false;
@@ -15,17 +15,27 @@ export class MovableObjekt extends DrawableObject {
         super();
     }
 
+    /**
+     * Applies gravity to the object, moving it downwards and adjusting vertical speed.
+     */
     applyGravity = () => {
         if (this.isAboveGround() || this.speedY > 0) {
-            this.y -= this.speedY; 
-            this.speedY -= this.acceleration; 
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
         }
     };
 
+    /**
+     * Checks if the object is currently in the air.
+     * @returns {boolean} True if the Y coordinate is above the ground threshold.
+     */
     isAboveGround() {
         return this.y < 150;
     }
 
+    /**
+     * Calculates the exact hitbox boundaries (real frame) applying custom offsets.
+     */
     getRealFrame = () => {
         this.rX = this.x + this.offset.left;
         this.rY = this.y + this.offset.top;
@@ -33,6 +43,11 @@ export class MovableObjekt extends DrawableObject {
         this.rH = this.height - this.offset.top - this.offset.bottom;
     };
 
+    /**
+     * Checks for a standard bounding box collision with another object.
+     * @param {Object} mO - The other movable object to check collision against.
+     * @returns {boolean} True if the hitboxes overlap.
+     */
     isColliding(mO) {
         return (
             this.rX + this.rW > mO.rX &&
@@ -42,6 +57,11 @@ export class MovableObjekt extends DrawableObject {
         );
     }
 
+    /**
+     * Checks if another object is colliding with this object from above (e.g. jumping on top).
+     * @param {Object} mO - The other movable object.
+     * @returns {boolean} True if a collision from above occurs.
+     */
     isCollidingFromTop(mO) {
         if (mO.isAboveGround() && mO.speedY <= 0) {
             return (
@@ -50,9 +70,12 @@ export class MovableObjekt extends DrawableObject {
                 this.rX - 15 + this.rW > mO.rX
             );
         }
-        return false; 
+        return false;
     }
 
+    /**
+     * Reduces energy by a minor amount when taking standard damage.
+     */
     hit() {
         this.energy -= 3;
         if (this.energy < 0) {
@@ -62,39 +85,61 @@ export class MovableObjekt extends DrawableObject {
         }
     }
 
+    /**
+     * Reduces energy completely or heavily when hit by an enemy.
+     */
     enemyHit() {
         this.energy -= 100;
         if (this.energy <= 0) {
             this.energy = 0;
         } else {
-            // diese Funktion ist vorgefertigt, und ermöglicht es uns
-            // den Zeitpunkt der Collision in dem Fall zu bestimmen (new Date().getTime()) --> Milisekunden ab dem 01.01.1970
             this.lastHit = new Date().getTime();
         }
     }
 
+    /**
+     * Checks if the object has zero or less energy remaining.
+     * @returns {boolean} True if dead.
+     */
     isDead() {
         return this.energy <= 0;
     }
 
+    /**
+     * Checks if the object was recently hit (within the last 2 seconds).
+     * @returns {boolean} True if still in the hurt state.
+     */
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit; // Differenz in ms
-        timePassed = timePassed / 1000; // Differenz in Sekunden
+        let timePassed = new Date().getTime() - this.lastHit;
+        timePassed = timePassed / 1000;
         return timePassed < 2;
     }
 
+    /**
+     * Moves the object to the right based on its current speed.
+     */
     moveRight() {
         this.x += this.speed;
     }
 
+    /**
+     * Moves the object to the left based on its current speed.
+     */
     moveLeft() {
         this.x -= this.speed;
     }
 
+    /**
+     * Triggers a vertical jump by setting the vertical upward speed.
+     */
     jump() {
         this.speedY = 30;
     }
 
+    /**
+     * Loops an array of images continuously for repeating animations.
+     * @param {string[]} images - Array of image file paths.
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -102,6 +147,10 @@ export class MovableObjekt extends DrawableObject {
         this.currentImage++;
     }
 
+    /**
+     * Plays an array of images exactly once without looping.
+     * @param {string[]} images - Array of image file paths.
+     */
     playAnimationOnce(images) {
         if (this.currentImage < images.length) {
             const path = images[this.currentImage];

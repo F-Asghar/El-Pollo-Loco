@@ -26,7 +26,7 @@
         <main>
             <dialog id="lock-screen">
                 <div>
-                    <img src="./img/icons/turn.png" alt="">
+                    <img src="./img/icons/turn.png" alt="" />
                 </div>
             </dialog>
             <section id="canvas-section">
@@ -84,33 +84,39 @@
                 </section>
 
                 <section id="start-screen">
-                    <div class="home-content">
+                    <div class="home-content" onclick="startGame()">
                         <img
                             id="start"
-                            class="home-buttons"
-                            onclick="startGame()"
+                            class="start-buttons"
                             src="./img/start-screen/door.png"
                             alt=""
                         />
                         <h4>Start</h4>
                     </div>
-                    <div class="home-content">
+                    <div
+                        class="home-content"
+                        onclick="openDialog('information-dialog')"
+                    >
                         <img
                             id="imprint"
-                            class="home-buttons"
-                            onclick="openDialog('information-dialog')"
+                            class="start-buttons"
                             src="./img/start-screen/Signpost2.png"
                             alt=""
                         />
                         <div>
-                            <h4>Imprint & privacy policy</h4>
+                            <h4>
+                                Imprint & <br />
+                                privacy policy
+                            </h4>
                         </div>
                     </div>
-                    <div class="home-content">
+                    <div
+                        class="home-content"
+                        onclick="openDialog('controls-dialog')"
+                    >
                         <img
                             id="settings"
-                            class="home-buttons"
-                            onclick="openDialog('controls-dialog')"
+                            class="start-buttons"
                             src="./img/start-screen/wheel.png"
                             alt=""
                         />
