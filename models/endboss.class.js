@@ -9,13 +9,14 @@ import { SoundHub } from "./soundHub.class.js";
 export class Endboss extends MovableObjekt {
     width = 300;
     height = 400;
-    x = 2600;
+    x = 3600;
     y = 55;
     energy = 1000;
     speed = 15;
     lastHit;
     soundPlayed;
     hurtSound = false;
+    isDeadSoundPlayed = false;
     otherDirection = false;
     static alive = true;
     offset = {
@@ -70,13 +71,15 @@ export class Endboss extends MovableObjekt {
             this.hurtSound = true;
             setTimeout(() => {
                 this.hurtSound = false;
-            }, 2000);
+            }, 800);
         }
-        if (this.isDead()) {
+        if (this.isDead() && !this.isDeadSoundPlayed) {
+            this.isDeadSoundPlayed = true;
             SoundHub.playOne(SoundHub.enemyDead);
             setTimeout(() => {
-                SoundHub.stopAll();
-            }, 600);
+                this.isDeadSoundPlayed = false;
+                SoundHub.resetSound();
+            }, 1000);
         }
     };
 
@@ -111,7 +114,7 @@ export class Endboss extends MovableObjekt {
      * the left map boundary (100px).
      */
     changeDirection = () => {
-        if (this.x <= 100) {
+        if (this.x <= 50) {
             this.otherDirection = true;
         }
     };

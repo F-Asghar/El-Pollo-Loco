@@ -37,15 +37,15 @@ export class CoinsBar extends StatusBar {
      * @requires CoinsBar
      */
     resolveImageIndex() {
-        if (CoinsBar.piece >= 25) {
+        if (CoinsBar.piece >= 20) {
             return 5;
-        } else if (CoinsBar.piece >= 20) {
+        } else if (CoinsBar.piece >= 16) {
             return 4;
-        } else if (CoinsBar.piece >= 15) {
+        } else if (CoinsBar.piece >= 12) {
             return 3;
-        } else if (CoinsBar.piece >= 10) {
+        } else if (CoinsBar.piece >= 8) {
             return 2;
-        } else if (CoinsBar.piece >= 5) {
+        } else if (CoinsBar.piece >= 4) {
             return 1;
         } else {
             return 0;

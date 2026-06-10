@@ -10,10 +10,10 @@ export class CollectableCoins extends CollectableObjekts {
     currentImage = 0;
     imageCache = {};
     offset = {
-        top: 10,
-        right: 10,
-        left: 10,
-        bottom: 10,
+        top: 30,
+        right: 60,
+        left: 55,
+        bottom: 30,
     };
     rX;
     rY;

@@ -35,6 +35,7 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
+    // checkSavedMuteState();
 }
 
 /**
@@ -53,6 +54,7 @@ function startGame() {
     initLevel();
     init();
     SoundHub.playOne(SoundHub.gameStart);
+    SoundHub.playOne(SoundHub.backgroundMusik);
 }
 
 
@@ -127,25 +129,18 @@ function closeDialog(id) {
  * * @requires SoundHub
  */
 function mute() {
-    SoundHub.stopAll();
-    const muteRef = document.getElementById("mute-button");
-    const volumeRef = document.getElementById("volume-button");
-    muteRef.style.display = "none";
-    volumeRef.style.display = "block";
+    SoundHub.handleMute();
 }
 
-/**
+/** 
  * Unmutes/plays all game audio tracks and toggles the visible control buttons 
  * to show the mute icon instead of the volume icon.
  * * @requires SoundHub
  */
 function volume() {
-    SoundHub.playAll();
-    const muteRef = document.getElementById("mute-button");
-    const volumeRef = document.getElementById("volume-button");
-    muteRef.style.display = "block";
-    volumeRef.style.display = "none";
+    SoundHub.handleVolume();
 }
+
 
 /**
  * Requests to trigger fullscreen mode specifically for the game canvas element.

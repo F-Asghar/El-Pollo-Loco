@@ -27,8 +27,8 @@ export class Character extends MovableObjekt {
 
     offset = {
         top: 120,
-        right: 30,
-        left: 20,
+        right: 20,
+        left: 10,
         bottom: 30,
     };
     rX;
@@ -65,7 +65,7 @@ export class Character extends MovableObjekt {
      * @requires Character
      */
     fightEndboss = () => {
-        if (this.x > 2200 && !this.approach) {
+        if (this.x > 3050 && !this.approach) {
             SoundHub.playOne(SoundHub.endBoss);
             Character.isNearBy = true;
             this.approach = true;
@@ -119,7 +119,7 @@ export class Character extends MovableObjekt {
         this.jump();
         this.soundPlayed = false;
     }
-    
+
     /**
      * Controls the character's animation state machine based on game events
      * (death, jumping, getting hurt, moving, or idling).
@@ -151,11 +151,14 @@ export class Character extends MovableObjekt {
     handleDeathAnimation() {
         SoundHub.pepeWalk.pause();
         this.playAnimation(ImageHub.pepe.dead);
-        Character.alive = false;
+        if (Character.alive) {
+            Character.alive = false;
+            SoundHub.resetSound();
+            SoundHub.playOne(SoundHub.pepeDead);
+        }
         setTimeout(() => {
             IntervalHub.stopAllIntervals();
-            SoundHub.stopAll();
-        }, 1200);
+        }, 1000);
     }
 
     /**

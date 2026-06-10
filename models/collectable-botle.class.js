@@ -11,9 +11,9 @@ export class CollectableBotle extends CollectableObjekts{
     height = 100;
     width = 100;
     offset = {
-        top: 10,
-        right: 20,
-        left: 20,
+        top: 30,
+        right: 60,
+        left: 70,
         bottom: 10
     }
     rX;
