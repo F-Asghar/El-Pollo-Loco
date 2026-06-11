@@ -37,13 +37,13 @@ export class BotleBar extends StatusBar {
      * @requires BotleBar
      */
     resolveImageIndex() {
-        if (BotleBar.pice >= 10) {
+        if (BotleBar.pice >= 5) {
             return 5;
-        } else if (BotleBar.pice >= 8) {
-            return 4;
-        } else if (BotleBar.pice >= 6) {
-            return 3;
         } else if (BotleBar.pice >= 4) {
+            return 4;
+        } else if (BotleBar.pice >= 3) {
+            return 3;
+        } else if (BotleBar.pice >= 2) {
             return 2;
         } else if (BotleBar.pice >= 1) {
             return 1;

@@ -277,7 +277,7 @@ export class World {
      */
     checkCollisionsBotle() {
         this.level.botle.forEach((botle, index) => {
-            if (this.character.isColliding(botle)) {
+            if (this.character.isColliding(botle) && BotleBar.pice < 5) {
                 BotleBar.pice++;
                 this.botleBar.setPice(BotleBar.pice);
                 SoundHub.playOne(SoundHub.collectBottle);

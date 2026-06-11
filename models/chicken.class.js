@@ -4,16 +4,17 @@ import { MovableObjekt } from "./movable-object.class.js";
 import { SoundHub } from "./soundHub.class.js";
 
 export class Chicken extends MovableObjekt {
-    x = 800 + Math.random() * 1000;
+    x = 500 + Math.random() * 3500;
     y = 335;
     height = 100;
     width = 100;
-    speed = 5 + Math.random() * 5;
     energy = 100;
+    acceleration = 1.8;
     soundPlayed;
     jumpedOn = false;
     isHit = false;
     hitted = false;
+    isHunter = false;
     offset = {
         top: 20,
         right: 25,
@@ -27,6 +28,9 @@ export class Chicken extends MovableObjekt {
 
     constructor() {
         super();
+
+        this.isHunter = Math.random() < 0.3;
+
         this.loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
         this.loadImages(ImageHub.chickenNormal.walk);
         this.loadImages(ImageHub.chickenNormal.dead);
@@ -35,7 +39,29 @@ export class Chicken extends MovableObjekt {
         IntervalHub.startInterval(this.startMovement, 1000 / 20);
         IntervalHub.startInterval(this.startAnimation, 200);
         IntervalHub.startInterval(this.setSound, 1000 / 60);
+        IntervalHub.startInterval(this.applyGravity, 1000 / 60);
+        IntervalHub.startInterval(this.randomJump, 1000 / 60);
+        IntervalHub.startInterval(this.changeSpeed, 1000 / 60);
     }
+
+    isAboveGround() {
+        return this.y < 335;
+    }
+
+    randomJump = () => {
+        if (!this.isDead() && !this.isAboveGround()) {
+            if (Math.random() < 0.01) {
+                this.speedY = 15 + Math.random() * 10;
+            }
+        }
+    };
+
+    changeSpeed = () => {
+        if (this.isDead()) return;
+        if (Math.random() < 0.02) {
+            this.speed = 4 + Math.random() * 8;
+        }
+    };
 
     /**
      * Controls the chicken's animation state. Displays the dead sprite, flattens its height,
@@ -69,10 +95,11 @@ export class Chicken extends MovableObjekt {
      * Inverts the chicken's movement direction flag whenever it hits
      * the defined left (50px) or right (2400px) boundaries of its patrol route.
      */
+
     changeDirection = () => {
-        if (this.x <= 50) {
+        if (this.x <= 30) {
             this.otherDirection = true;
-        } else if (this.x >= 2400) {
+        } else if (this.x >= 3500) {
             this.otherDirection = false;
         }
     };

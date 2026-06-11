@@ -26,7 +26,7 @@ window.home = home;
 
 /**
  * Initializes the main game components by capturing the canvas element,
- * creating the game world instance, and binding keyboard controls.
+ * creating the game world instance, and binding keyboard controls and updates volume Icons.
  * * @global
  * @requires World
  * @requires Keyboard
@@ -35,7 +35,7 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas);
     Keyboard.setControls();
-    // checkSavedMuteState();
+    SoundHub.updateVolumeIcons();
 }
 
 /**
@@ -77,7 +77,7 @@ function finished() {
             Endboss.alive = true;
             SoundHub.resetSound();
             openDialog("restart-home");
-        }, 2000);
+        }, 3000);
     }
 }
 

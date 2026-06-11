@@ -190,13 +190,13 @@ canvas {
     }
 }
 
-#volume-button {
+/* #volume-button {
     display: none;
-}
+} */
 
-#mute-button {
+/* #mute-button {
     display: block;
-}
+} */
 
 .dialog {
     width: inherit;

@@ -77,7 +77,7 @@ export class MovableObjekt extends DrawableObject {
      * Reduces energy by a minor amount when taking standard damage.
      */
     hit() {
-        this.energy -= 3;
+        this.energy -= 2;
         if (this.energy < 0) {
             this.energy = 0;
         } else {

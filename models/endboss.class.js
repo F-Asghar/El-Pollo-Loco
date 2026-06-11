@@ -20,8 +20,8 @@ export class Endboss extends MovableObjekt {
     otherDirection = false;
     static alive = true;
     offset = {
-        top: 20,
-        right: 20,
+        top: 60,
+        right: 40,
         left: 20,
         bottom: 20,
     };

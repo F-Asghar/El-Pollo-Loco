@@ -157,6 +157,7 @@ export class Character extends MovableObjekt {
             SoundHub.playOne(SoundHub.pepeDead);
         }
         setTimeout(() => {
+            
             IntervalHub.stopAllIntervals();
         }, 1000);
     }
@@ -283,7 +284,7 @@ export class Character extends MovableObjekt {
             isMoving &&
             SoundHub.pepeWalk.paused &&
             Character.alive &&
-            !SoundHub.muted
+            localStorage.getItem("isMuted") !== "true"
         ) {
             SoundHub.pepeWalk.play();
             SoundHub.stopOne(SoundHub.pepeSleep);
