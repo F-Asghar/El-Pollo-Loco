@@ -10,6 +10,7 @@ export class MovableObjekt extends DrawableObject {
     soundPlayed = false;
     hurtSound = false;
     lastHit = 0;
+    currentImageOnce = 0;
 
     constructor() {
         super();
@@ -76,8 +77,12 @@ export class MovableObjekt extends DrawableObject {
     /**
      * Reduces energy by a minor amount when taking standard damage.
      */
-    hit() {
-        this.energy -= 2;
+    hit(enemy) {
+        if (enemy && enemy.constructor.name === "Endboss") {
+            this.energy -= 1;
+        } else {
+            this.energy -= 2;
+        }
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -152,10 +157,13 @@ export class MovableObjekt extends DrawableObject {
      * @param {string[]} images - Array of image file paths.
      */
     playAnimationOnce(images) {
-        if (this.currentImage < images.length) {
-            const path = images[this.currentImage];
+        if (this.currentImageOnce < images.length) {
+            const path = images[this.currentImageOnce];
             this.img = this.imageCache[path];
-            this.currentImage++;
+            this.currentImageOnce++;  
+            console.log(this.currentImageOnce);
+            
         }
     }
+
 }

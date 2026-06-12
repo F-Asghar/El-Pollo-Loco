@@ -46,6 +46,12 @@ export class World {
         this.imgLost = this.loadImage(ImageHub.loose.lost[0]);
         this.imgWin = this.loadImage(ImageHub.win.won[0]);
         IntervalHub.startInterval(this.run, 1000 / 60);
+
+        this.level.enemies.forEach(enemy => {
+    if (enemy instanceof Endboss) {
+        enemy.world = this;
+    }
+});
     }
 
     /**
@@ -178,9 +184,10 @@ export class World {
                 this.character.isColliding(enemy) &&
                 !enemy.jumpedOn &&
                 !enemy.isDead() &&
+                
                 (!this.character.isAboveGround() || enemy instanceof Endboss)
             ) {
-                this.character.hit();
+                this.character.hit(enemy);
                 this.statusBar.setPercentage(this.character.energy);
                 enemy.hitted = true;
             }

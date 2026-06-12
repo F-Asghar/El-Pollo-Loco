@@ -1,9 +1,9 @@
+import { MovableObjekt } from "./movable-object.class.js";
 import { level1 } from "../levels/level1.js";
 import { ImageHub } from "./imageHub.class.js";
 import { IntervalHub } from "./intervalHub.class.js";
 import { Keyboard } from "./keyboard.class.js";
 import { Level } from "./level.class.js";
-import { MovableObjekt } from "./movable-object.class.js";
 import { SoundHub } from "./soundHub.class.js";
 
 export class Character extends MovableObjekt {
@@ -16,6 +16,7 @@ export class Character extends MovableObjekt {
     lastHit;
     energy = 100;
     approach = false;
+    currentImage = 0;
     static otherDirection = false;
     static alive = true;
     static isNearBy = false;
@@ -24,6 +25,7 @@ export class Character extends MovableObjekt {
     soundPlayed = false;
     hurtSound = false;
     deadSound = false;
+    currentImageOnce = 0;
 
     offset = {
         top: 120,
@@ -54,6 +56,8 @@ export class Character extends MovableObjekt {
         IntervalHub.startInterval(this.startMovement, 1000 / 60);
         IntervalHub.startInterval(this.startAnimation, 100);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
+
+        IntervalHub.startInterval(this.jumpAnimationCheck, 1000 / 40);
     }
 
     /**
@@ -153,11 +157,9 @@ export class Character extends MovableObjekt {
         this.playAnimation(ImageHub.pepe.dead);
         if (Character.alive) {
             Character.alive = false;
-            SoundHub.resetSound();
             SoundHub.playOne(SoundHub.pepeDead);
         }
         setTimeout(() => {
-            
             IntervalHub.stopAllIntervals();
         }, 1000);
     }
@@ -168,13 +170,19 @@ export class Character extends MovableObjekt {
      */
     handleActiveAnimations() {
         if (this.isAboveGround()) {
-            this.playAnimation(ImageHub.pepe.jump);
+            this.playAnimationOnce(ImageHub.pepe.jump);
         } else if (this.isHurt()) {
             this.playAnimation(ImageHub.pepe.hurt);
         } else if (Keyboard.RIGHT || Keyboard.LEFT) {
             this.playAnimation(ImageHub.pepe.walk);
         }
         this.long();
+    }
+
+    jumpAnimationCheck = () => {
+        if (!this.isAboveGround()) {
+            this.currentImageOnce = 0;
+        }
     }
 
     /**

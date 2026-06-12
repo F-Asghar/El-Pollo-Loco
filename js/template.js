@@ -6,7 +6,7 @@ export function getControlTemplate() {
             <p>X</p>
             </button>
             </div>
-            <h2 id="headline">Control Settings</h2>
+            <h2 id="controls-headline">Control Settings</h2>
             <h3>Move Left: Arrow Left</h3>
             <h3>Move Right: Arrow Right</h3>
             <h3>Jump: Space</h3>
@@ -45,24 +45,24 @@ export function getImprintTemplate() {
             </button>
             </div> 
             <section id="imprint-template">
-            <h2>Impressum</h2>
+            <h2>Legal Notice</h2>
             <p>
-                Dies ist eine nicht-kommerzielle, rein private
-                Website, die ausschließlich zu Schulungs- und
-                Übungszwecken erstellt wurde.
-                <h2>Verantwortlich gemäß § 5 TMG</h2>
+                This is a non-commercial, purely private
+                website created exclusively for training and
+                educational purposes.
+                <h2>Responsible according to § 5 TMG</h2>
             <p>
                 Fiarazz Asghar<br />
                 Auf der Steige 15<br />
                 71287 Weissach
-                <h2>Kontakt</h2>
+                <h2>Contact</h2>
             <p>
-                E-Mail:
+                Email:
                 <a href="mailto:ferazasghar6@gmail.com">
                 ferazasghar6@gmail.com</a>
             </p>
             <p>
-                Quelle:
+                Source:
                 <a href="https://www.e-recht24.de">
                 https://www.e-recht24.de</a>
             </p>
@@ -71,78 +71,77 @@ export function getImprintTemplate() {
 
 export function getPrivacyPolicyTemplate() {
     return `<section>
-    <h2>Datenschutzerklärung</h2>
+    <h2>Privacy Policy</h2>
 
-    <h3>1. Verantwortliche Stelle</h3>
+    <h3>1. Responsible Entity</h3>
     <p>
         Fiarazz Asghar<br>
         Auf der Steige 15<br>
         71287 Weissach<br>
-        E-Mail: 
+        Email: 
         <a href="mailto:ferazasghar6@gmail.com">ferazasghar6@gmail.com</a>
     </p>
     <p>
-        Diese Website ist eine nicht-kommerzielle, rein private Webseite,
-        die ausschließlich zu Schulungs- und Übungszwecken erstellt wurde.
+        This website is a non-commercial, purely private website
+        created exclusively for training and educational purposes.
     </p>
 
-    <h3>2. Erhebung und Speicherung personenbezogener Daten sowie Art und Zweck ihrer Verwendung</h3>
-    <h4>a) Beim Besuch der Website</h4>
+    <h3>2. Collection and Storage of Personal Data as well as the Type and Purpose of Their Use</h3>
+    <h3>a) When Visiting the Website</h3>
     <p>
-        Der Betreiber dieser privaten Website speichert keine personenbezogenen Daten aktiv.
-        Es findet kein Tracking, keine Analyse und keine Weitergabe von Daten an Dritte statt.
+        The operator of this private website does not actively store any personal data.
+        There is no tracking, no analysis, and no disclosure of data to third parties.
     </p>
     <p>
-        Der Webhoster kann jedoch technisch notwendige Daten automatisch erheben 
-        (z. B. IP-Adresse, Datum, Uhrzeit, Browsertyp). Dies ist aus technischen Gründen 
-        erforderlich, um die Website bereitzustellen. Eine weitergehende Auswertung erfolgt nicht.
+        However, the web host may automatically collect technically necessary data 
+        (e.g., IP address, date, time, browser type). This is required for technical reasons 
+        to provide the website. No further evaluation takes place.
     </p>
 
     <h3>3. Cookies</h3>
     <p>
-        Auf dieser Website werden keine Cookies gesetzt, die personenbezogene Daten speichern 
-        oder analysieren.
+        No cookies that store or analyze personal data are set on this website.
     </p>
 
-    <h3>4. Kontaktaufnahme</h3>
+    <h3>4. Contacting Us</h3>
     <p>
-        Wenn du über die angegebene E-Mail-Adresse Kontakt aufnimmst, speichere ich die
-        übermittelten Daten (z. B. E-Mail-Adresse, Name, Inhalt der Nachricht) ausschließlich 
-        zur Bearbeitung deiner Anfrage. Die Daten werden nicht an Dritte weitergegeben.
+        If you contact us via the provided email address, I will store the
+        transmitted data (e.g., email address, name, content of the message) exclusively 
+        to process your inquiry. The data will not be shared with third parties.
     </p>
 
-    <h3>5. Rechte der betroffenen Personen</h3>
+    <h3>5. Rights of the Data Subjects</h3>
     <p>
-        Dir stehen folgende Rechte nach der DSGVO zu:
+        You are entitled to the following rights under the GDPR:
     </p>
     <ul>
-        <li>Auskunft über gespeicherte personenbezogene Daten</li>
-        <li>Berichtigung unrichtiger Daten</li>
-        <li>Löschung („Recht auf Vergessenwerden“)</li>
-        <li>Einschränkung der Verarbeitung</li>
-        <li>Widerspruch gegen die Verarbeitung</li>
-        <li>Datenübertragbarkeit</li>
+        <li>Information about stored personal data</li>
+        <li>Correction of incorrect data</li>
+        <li>Deletion ("Right to be forgotten")</li>
+        <li>Restriction of processing</li>
+        <li>Objection to processing</li>
+        <li>Data portability</li>
     </ul>
     <p>
-        Zur Ausübung dieser Rechte reicht eine formlose E-Mail an 
-        <a href="mailto:ferazasghar6@gmail.com">ferazasghar6@gmail.com</a>.
+        To exercise these rights, an informal email to 
+        <a href="mailto:ferazasghar6@gmail.com">ferazasghar6@gmail.com</a> is sufficient.
     </p>
 
-    <h3>6. Speicherung der Daten</h3>
+    <h3>6. Data Retention</h3>
     <p>
-        Es werden keine personenbezogenen Daten dauerhaft gespeichert, außer wenn du mir freiwillig 
-        welche per E-Mail sendest. Diese Daten werden gelöscht, sobald dein Anliegen erledigt ist.
+        No personal data is permanently stored unless you voluntarily send it to me 
+        via email. This data will be deleted as soon as your request has been resolved.
     </p>
 
-    <h3>7. Weitergabe von Daten an Dritte</h3>
+    <h3>7. Disclosure of Data to Third Parties</h3>
     <p>
-        Es erfolgt keine Weitergabe personenbezogener Daten an Dritte.
+        There is no disclosure of personal data to third parties.
     </p>
 
-    <h3>8. Änderungen dieser Datenschutzerklärung</h3>
+    <h3>8. Changes to This Privacy Policy</h3>
     <p>
-        Ich behalte mir vor, diese Datenschutzerklärung bei Bedarf anzupassen, um sie an 
-        aktuelle rechtliche Anforderungen oder Änderungen auf der Website anzupassen.
+        I reserve the right to adapt this privacy policy if necessary to align it with 
+        current legal requirements or changes on the website.
     </p>
 </section>
 `;

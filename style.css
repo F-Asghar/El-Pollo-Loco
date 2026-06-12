@@ -25,6 +25,7 @@ body {
     background-size: cover;
     font-size: 36px;
     font-family: "Kenia", Arial, Helvetica, sans-serif;
+    overflow: hidden;
 }
 
 main {
@@ -33,6 +34,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 canvas {
@@ -108,12 +110,11 @@ canvas {
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: flex-start;
     position: absolute;
     z-index: 10;
     top: 0;
-    padding: 0px 24px;
 }
 
 .home-content {
@@ -125,8 +126,8 @@ canvas {
     gap: 8px;
 
     img {
-        width: 50px;
-        height: 50px;
+       width: clamp(50px, 5vw, 60px);
+height: clamp(50px, 5vw, 60px); 
     }
 
     &:hover {
@@ -153,7 +154,8 @@ canvas {
 }
 
 #lock-screen {
-    width: 100vw;
+    position: absolute;
+    width: 100dvw;
     height: 100dvh;
     max-width: 100vw;
     max-height: 100dvh;
@@ -162,15 +164,10 @@ canvas {
     padding: 0;
     background-color: black;
     color: white;
-    z-index: 10000;
-
-    div {
-        width: inherit;
-        height: inherit;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    display: none;
 
     img {
         filter: invert(1);
@@ -190,14 +187,6 @@ canvas {
     }
 }
 
-/* #volume-button {
-    display: none;
-} */
-
-/* #mute-button {
-    display: block;
-} */
-
 .dialog {
     width: inherit;
     height: inherit;
@@ -214,8 +203,9 @@ canvas {
     border-width: 0;
     overflow-x: hidden;
     z-index: 15;
-    padding: clamp(10px, 15vw, 16px);
+    padding: 16px clamp(10px, 15vw, 32px);
     margin: 0;
+    font-family: "Arial Black", sans-serif;
 
     &:focus {
         outline: none;
@@ -244,8 +234,17 @@ canvas {
     }
 }
 
-#headline {
-    margin-bottom: 24px;
+#controls-headline {
+    background: linear-gradient(
+        to bottom,
+        #fff000 0%,
+        #ff9a00 60%,
+        #e65c00 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 2px black;
 }
 
 #imprint-template {
@@ -263,14 +262,20 @@ h1 {
 
 h2 {
     font-size: clamp(24px, 5.5vw, 54px);
+    margin-top: 16px;
 }
 
 h3 {
-    font-size: clamp(20px, 5.5vw, 48px);
+    font-size: clamp(20px, 5.5vw, 40px);
 }
 
 h4 {
     font-size: clamp(16px, 3.5vw, 20px);
+}
+
+li {
+    font-size: clamp(16px, 2.5vw, 24px);
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 720px) {
@@ -293,21 +298,15 @@ h4 {
     }
 }
 
-@media (orientation: landscape) and (pointer: coarse) {
-    @media only screen and (max-height: 500px) {
-        #canvas-section {
-            width: 100dvw;
-            height: 100dvh;
-        }
-
-        #control-buttons {
-            display: flex;
-        }
+@media screen and (orientation: landscape) and (pointer: coarse) and (max-height: 810px) {
+    #canvas-section {
+        width: 100dvw;
+        height: 100dvh;
+        max-width: 100dvw;
+        max-height: 100dvh;
     }
 
-    @media only screen and (max-width: 900px) {
-        #canvas-section {
-            width: 100dvw;
-        }
+    #control-buttons {
+        display: flex;
     }
 }

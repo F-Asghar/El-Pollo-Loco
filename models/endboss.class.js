@@ -41,23 +41,7 @@ export class Endboss extends MovableObjekt {
         IntervalHub.startInterval(this.startAnimation, 200);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
         IntervalHub.startInterval(this.setSound, 1000 / 60);
-        IntervalHub.startInterval(this.changeDirection, 1000 / 60);
     }
-
-    /**
-     * Handles the horizontal movement of the endboss.
-     * Moves left if the player is nearby, or right if the direction flag is inverted,
-     * provided the boss is still alive.
-     * * @global
-     * @requires Character
-     */
-    startMovement = () => {
-        if (Character.isNearBy && !this.isDead() && !this.otherDirection) {
-            this.moveLeft();
-        } else if (!this.isDead() && this.otherDirection) {
-            this.moveRight();
-        }
-    };
 
     /**
      * Manages the endboss sound effects. Triggers a hurt sound with a 2-second cooldown,
@@ -78,7 +62,6 @@ export class Endboss extends MovableObjekt {
             SoundHub.playOne(SoundHub.enemyDead);
             setTimeout(() => {
                 this.isDeadSoundPlayed = false;
-                SoundHub.resetSound();
             }, 1000);
         }
     };
@@ -110,12 +93,43 @@ export class Endboss extends MovableObjekt {
     };
 
     /**
-     * Forces the endboss to turn around and move right once it reaches
-     * the left map boundary (100px).
+     * Handles the horizontal movement of the endboss.
+     * Moves left if the player is nearby, or right if the direction flag is inverted,
+     * provided the boss is still alive.
+     * * @global
+     * @requires Character
      */
-    changeDirection = () => {
-        if (this.x <= 50) {
-            this.otherDirection = true;
+    // startMovement = () => {
+    //     if (Character.isNearBy && !this.isDead() && !this.otherDirection) {
+    //         this.moveLeft();
+    //     } else if (!this.isDead() && this.otherDirection) {
+    //         this.moveRight();
+    //     }
+    // };
+startMovement = () => {
+        if (!this.isDead() && Character.isNearBy && this.world && this.world.character) {
+            let char = this.world.character;
+            let offset = 180; // Der Versatz in Pixeln – je höher, desto träger reagiert der Boss
+
+            // Fall 1: Boss läuft aktuell nach links (otherDirection ist false)
+            if (!this.otherDirection) {
+                // Er dreht sich erst um, wenn der Charakter RECHTS vom Boss + Versatz ist
+                if (char.x > this.x + offset) {
+                    this.otherDirection = true;
+                } else {
+                    this.moveLeft();
+                }
+            } 
+            // Fall 2: Boss läuft aktuell nach rechts (otherDirection ist true)
+            else if (this.otherDirection) {
+                // Er dreht sich erst um, wenn der Charakter LINKS vom Boss - Versatz ist
+                if (char.x < this.x - offset) {
+                    this.otherDirection = false;
+                } else {
+                    this.moveRight();
+                }
+            }
         }
     };
+
 }

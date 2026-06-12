@@ -6,7 +6,7 @@ import { IntervalHub } from "./intervalHub.class.js";
 
 
 export class CollectableBotle extends CollectableObjekts{
-    x = 100 + Math.random() * 2150;
+    x = 100 + Math.random() * 3600;
     y = 340;
     height = 100;
     width = 100;

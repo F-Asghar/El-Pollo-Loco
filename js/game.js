@@ -165,16 +165,19 @@ function enterFullscreen(element) {
     }
 }
 
-/**
- * Event listener that monitors window resizing. It automatically opens a full-screen
- * blocking modal if the screen width drops below 600px (e.g., forcing mobile rotation), 
- * and closes it when the screen is wide enough.
- */
-window.addEventListener("resize", () => {
+
+checkScreenSize();
+window.addEventListener("resize", checkScreenSize);
+
+function checkScreenSize() {
     const lockScreen = document.getElementById("lock-screen");
-    if (window.innerWidth < 600) {
+    const isLandscape = window.innerWidth > window.innerHeight;
+    if (window.innerWidth < 725 && !isLandscape) {
+        lockScreen.style.display = "flex"; 
         lockScreen.showModal();
     } else {
+        lockScreen.style.display = "none"; 
         lockScreen.close();
     }
-});
+}
+

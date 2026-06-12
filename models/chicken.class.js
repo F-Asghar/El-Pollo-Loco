@@ -99,8 +99,12 @@ export class Chicken extends MovableObjekt {
     changeDirection = () => {
         if (this.x <= 30) {
             this.otherDirection = true;
-        } else if (this.x >= 3500) {
+        } else if (this.x >= 3600) {
             this.otherDirection = false;
+        } else {
+            if (Math.random() < 0.005) {
+                this.otherDirection = !this.otherDirection;
+            }
         }
     };
 
