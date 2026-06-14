@@ -74,6 +74,8 @@ export class MovableObjekt extends DrawableObject {
         return false;
     }
 
+
+
     /**
      * Reduces energy by a minor amount when taking standard damage.
      */

@@ -99,15 +99,13 @@ export class Endboss extends MovableObjekt {
      * * @global
      * @requires Character
      */
-    // startMovement = () => {
-    //     if (Character.isNearBy && !this.isDead() && !this.otherDirection) {
-    //         this.moveLeft();
-    //     } else if (!this.isDead() && this.otherDirection) {
-    //         this.moveRight();
-    //     }
-    // };
-startMovement = () => {
-        if (!this.isDead() && Character.isNearBy && this.world && this.world.character) {
+    startMovement = () => {
+        if (
+            !this.isDead() &&
+            Character.isNearBy &&
+            this.world &&
+            this.world.character
+        ) {
             let char = this.world.character;
             let offset = 180; // Der Versatz in Pixeln – je höher, desto träger reagiert der Boss
 
@@ -119,7 +117,7 @@ startMovement = () => {
                 } else {
                     this.moveLeft();
                 }
-            } 
+            }
             // Fall 2: Boss läuft aktuell nach rechts (otherDirection ist true)
             else if (this.otherDirection) {
                 // Er dreht sich erst um, wenn der Charakter LINKS vom Boss - Versatz ist
@@ -131,5 +129,4 @@ startMovement = () => {
             }
         }
     };
-
 }

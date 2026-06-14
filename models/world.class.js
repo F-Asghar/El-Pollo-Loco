@@ -46,12 +46,11 @@ export class World {
         this.imgLost = this.loadImage(ImageHub.loose.lost[0]);
         this.imgWin = this.loadImage(ImageHub.win.won[0]);
         IntervalHub.startInterval(this.run, 1000 / 60);
-
-        this.level.enemies.forEach(enemy => {
-    if (enemy instanceof Endboss) {
-        enemy.world = this;
-    }
-});
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss) {
+                enemy.world = this;
+            }
+        });
     }
 
     /**
@@ -80,7 +79,7 @@ export class World {
     }
 
     /**
-     * Renders the game-over screen overlay if the character dies, and resets 
+     * Renders the game-over screen overlay if the character dies, and resets
      * the end flag after a 2-second timeout delay.
      */
     youLost() {
@@ -99,7 +98,7 @@ export class World {
     }
 
     /**
-     * Renders the victory screen overlay if the endboss is defeated, and resets 
+     * Renders the victory screen overlay if the endboss is defeated, and resets
      * the end flag after a 2-second timeout delay.
      */
     youWon() {
@@ -118,7 +117,7 @@ export class World {
     }
 
     /**
-     * The primary game physics and state processing loop. Coordinates collision checks, 
+     * The primary game physics and state processing loop. Coordinates collision checks,
      * input detection, and end-game state evaluations.
      */
     run = () => {
@@ -134,7 +133,7 @@ export class World {
     };
 
     /**
-     * Checks if the player spawns a throwable bottle based on inputs and ammo, 
+     * Checks if the player spawns a throwable bottle based on inputs and ammo,
      * and resets the throw state when the key is released.
      */
     checkThrowObjects = () => {
@@ -154,7 +153,7 @@ export class World {
     };
 
     /**
-     * Instantiates a new ThrowableObject at the correct X/Y coordinates 
+     * Instantiates a new ThrowableObject at the correct X/Y coordinates
      * based on the character's facing direction and adds it to the tracking array.
      */
     createNewBottle() {
@@ -173,9 +172,8 @@ export class World {
         this.throwableObjects.push(bottle);
     }
 
-
     /**
-     * Loops through all level enemies to check for standard horizontal collisions 
+     * Loops through all level enemies to check for standard horizontal collisions
      * where the character takes damage.
      */
     checkCollisions() {
@@ -184,7 +182,6 @@ export class World {
                 this.character.isColliding(enemy) &&
                 !enemy.jumpedOn &&
                 !enemy.isDead() &&
-                
                 (!this.character.isAboveGround() || enemy instanceof Endboss)
             ) {
                 this.character.hit(enemy);
@@ -195,7 +192,7 @@ export class World {
     }
 
     /**
-     * Loops through all level enemies to check if the character successfully 
+     * Loops through all level enemies to check if the character successfully
      * jumps on top of them to defeat them.
      */
     checkCollisionsFromTop() {
@@ -215,7 +212,6 @@ export class World {
         });
     }
 
-
     /**
      * Loops through all enemies and active throwable bottles to check for impacts.
      */
@@ -234,7 +230,7 @@ export class World {
     }
 
     /**
-     * Processes the impact of a bottle hitting an enemy by triggering damage, 
+     * Processes the impact of a bottle hitting an enemy by triggering damage,
      * playing sound effects, and updating the UI if the endboss was struck.
      * @param {Object} botle - The bottle object that hit the enemy.
      * @param {Object} enemy - The enemy object that was hit.
@@ -250,7 +246,7 @@ export class World {
     }
 
     /**
-     * Removes the collided bottle from the tracking array after a short delay 
+     * Removes the collided bottle from the tracking array after a short delay
      * to allow the splash animation to finish playing.
      * @param {Object} botle - The bottle object to remove.
      */
@@ -332,7 +328,7 @@ export class World {
     }
 
     /**
-     * Draws a single game object onto the canvas context, handling image flipping 
+     * Draws a single game object onto the canvas context, handling image flipping
      * if the object is facing the opposite direction.
      * @param {Object} mo - The movable or standard object to draw.
      */
@@ -348,7 +344,7 @@ export class World {
     }
 
     /**
-     * Saves the canvas state, translates and scales the context to horizontally 
+     * Saves the canvas state, translates and scales the context to horizontally
      * mirror the image, and inverts the object's X coordinate.
      * @param {Object} mo - The object whose image needs to be flipped.
      */
@@ -360,7 +356,7 @@ export class World {
     }
 
     /**
-     * Restores the object's original X coordinate and reverts the canvas context 
+     * Restores the object's original X coordinate and reverts the canvas context
      * back to its last saved state.
      * @param {Object} mo - The object whose image was flipped.
      */

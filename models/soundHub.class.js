@@ -35,6 +35,7 @@ export class SoundHub {
     }
 
     static resetSound() {
+        SoundHub.stopOne(SoundHub.backgroundMusik);
         SoundHub.allSounds.forEach((sound) => {
             sound.pause();
             sound.currentTime = 0;
@@ -52,10 +53,6 @@ export class SoundHub {
             sound.volume = 0.0;
         });
         SoundHub.updateVolumeIcons();
-        // const muteRef = document.getElementById("mute-button");
-        // const volumeRef = document.getElementById("volume-button");
-        // muteRef.style.display = "none";
-        // volumeRef.style.display = "block";
     }
 
     static handleVolume() {
@@ -70,27 +67,16 @@ export class SoundHub {
             }
         });
         SoundHub.updateVolumeIcons();
-        // const muteRef = document.getElementById("mute-button");
-        // const volumeRef = document.getElementById("volume-button");
-        // muteRef.style.display = "block";
-        // volumeRef.style.display = "none";
     }
 
 static updateVolumeIcons() {
         const muteRef = document.getElementById("mute-button");
         const volumeRef = document.getElementById("volume-button");
-
-        // WICHTIG: Erst prüfen, ob die Elemente im HTML überhaupt existieren!
         if (!muteRef || !volumeRef) return; 
-
         if (localStorage.getItem("isMuted") === "true") {
-            // SPIEL IST STUMM: 
-            // Zeige das Volume-Icon (um es wieder laut zu machen)
             muteRef.style.display = "none";
             volumeRef.style.display = "block";
         } else {
-            // SPIEL IST LAUT (Wert ist "false" oder noch leer):
-            // Zeige das Mute-Icon (um es stummzuschalten)
             muteRef.style.display = "block";
             volumeRef.style.display = "none";
         }

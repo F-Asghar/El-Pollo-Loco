@@ -76,6 +76,7 @@ function finished() {
             Character.isNearBy = false;
             Endboss.alive = true;
             SoundHub.resetSound();
+            console.log(SoundHub.allSounds);
             openDialog("restart-home");
         }, 3000);
     }
