@@ -74,8 +74,6 @@ export class MovableObjekt extends DrawableObject {
         return false;
     }
 
-
-
     /**
      * Reduces energy by a minor amount when taking standard damage.
      */
@@ -162,9 +160,7 @@ export class MovableObjekt extends DrawableObject {
         if (this.currentImageOnce < images.length) {
             const path = images[this.currentImageOnce];
             this.img = this.imageCache[path];
-            this.currentImageOnce++;  
-            console.log(this.currentImageOnce);
-            
+            this.currentImageOnce++;              
         }
     }
 

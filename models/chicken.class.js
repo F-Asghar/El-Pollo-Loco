@@ -44,10 +44,19 @@ export class Chicken extends MovableObjekt {
         IntervalHub.startInterval(this.changeSpeed, 1000 / 60);
     }
 
+    /**
+     * Checks if the object is currently in the air based on its Y-coordinate.
+     * @returns {boolean} True if the object's Y-coordinate is less than the ground level (335).
+     */
     isAboveGround() {
         return this.y < 335;
     }
 
+    /**
+     * Triggers a jump with a randomized vertical speed based on a low probability.
+     * The jump can only occur if the object is alive and currently touching the ground.
+     * There is a 1% chance per frame to trigger the jump.
+     */
     randomJump = () => {
         if (!this.isDead() && !this.isAboveGround()) {
             if (Math.random() < 0.01) {
@@ -56,6 +65,11 @@ export class Chicken extends MovableObjekt {
         }
     };
 
+    /**
+     * Randomly alters the movement speed of the object within a specific range.
+     * Does nothing if the object is dead. There is a 2% chance per frame 
+     * to recalculate the speed between 4 and 12.
+     */
     changeSpeed = () => {
         if (this.isDead()) return;
         if (Math.random() < 0.02) {
@@ -92,10 +106,10 @@ export class Chicken extends MovableObjekt {
     };
 
     /**
-     * Inverts the chicken's movement direction flag whenever it hits
-     * the defined left (50px) or right (2400px) boundaries of its patrol route.
+     * Updates the movement direction of the object based on world boundaries and a random factor.
+     * Forces the object to turn around at the left boundary (x <= 30) and right boundary (x >= 3600).
+     * Inside the boundaries, there is a 0.5% chance per frame to randomly change direction.
      */
-
     changeDirection = () => {
         if (this.x <= 30) {
             this.otherDirection = true;

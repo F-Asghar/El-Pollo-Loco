@@ -76,7 +76,6 @@ function finished() {
             Character.isNearBy = false;
             Endboss.alive = true;
             SoundHub.resetSound();
-            console.log(SoundHub.allSounds);
             openDialog("restart-home");
         }, 3000);
     }
@@ -167,12 +166,26 @@ function enterFullscreen(element) {
 }
 
 
+/**
+ * Initial check of the screen size upon script loading.
+ */
 checkScreenSize();
+
+/**
+ * Event listener that triggers the screen size check whenever the window is resized.
+ */
 window.addEventListener("resize", checkScreenSize);
 
+/**
+ * Checks the current viewport dimensions and orientation.
+ * If the screen width is smaller than 725px and the device is in portrait mode,
+ * a modal lock screen is displayed to force the user into landscape mode.
+ * Otherwise, the lock screen is hidden and closed.
+ */
 function checkScreenSize() {
     const lockScreen = document.getElementById("lock-screen");
     const isLandscape = window.innerWidth > window.innerHeight;
+    
     if (window.innerWidth < 725 && !isLandscape) {
         lockScreen.style.display = "flex"; 
         lockScreen.showModal();

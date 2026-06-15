@@ -93,40 +93,53 @@ export class Endboss extends MovableObjekt {
     };
 
     /**
-     * Handles the horizontal movement of the endboss.
-     * Moves left if the player is nearby, or right if the direction flag is inverted,
-     * provided the boss is still alive.
-     * * @global
-     * @requires Character
+     * Main movement control loop. Checks requirements and initiates
+     * the character chasing logic if the conditions are met.
      */
     startMovement = () => {
-        if (
-            !this.isDead() &&
-            Character.isNearBy &&
-            this.world &&
-            this.world.character
-        ) {
-            let char = this.world.character;
-            let offset = 180; // Der Versatz in Pixeln – je höher, desto träger reagiert der Boss
-
-            // Fall 1: Boss läuft aktuell nach links (otherDirection ist false)
-            if (!this.otherDirection) {
-                // Er dreht sich erst um, wenn der Charakter RECHTS vom Boss + Versatz ist
-                if (char.x > this.x + offset) {
-                    this.otherDirection = true;
-                } else {
-                    this.moveLeft();
-                }
-            }
-            // Fall 2: Boss läuft aktuell nach rechts (otherDirection ist true)
-            else if (this.otherDirection) {
-                // Er dreht sich erst um, wenn der Charakter LINKS vom Boss - Versatz ist
-                if (char.x < this.x - offset) {
-                    this.otherDirection = false;
-                } else {
-                    this.moveRight();
-                }
-            }
+        if (this.isDead() || !Character.isNearBy || !this.world?.character) {
+            return;
         }
+        this.chaseCharacter(this.world.character);
     };
+
+    /**
+     * Controls horizontal movement and direction changes based on the character's position.
+     * @param {Object} char - The character instance from the world.
+     */
+    chaseCharacter(char) {
+        let offset = 180;
+
+        if (!this.otherDirection) {
+            this.handleLeftMovement(char, offset);
+        } else {
+            this.handleRightMovement(char, offset);
+        }
+    }
+
+    /**
+     * Handles movement to the left or switches direction to the right if the character is too far right.
+     * @param {Object} char - The character instance.
+     * @param {number} offset - The distance threshold before turning around.
+     */
+    handleLeftMovement(char, offset) {
+        if (char.x > this.x + offset) {
+            this.otherDirection = true;
+        } else {
+            this.moveLeft();
+        }
+    }
+
+    /**
+     * Handles movement to the right or switches direction to the left if the character is too far left.
+     * @param {Object} char - The character instance.
+     * @param {number} offset - The distance threshold before turning around.
+     */
+    handleRightMovement(char, offset) {
+        if (char.x < this.x - offset) {
+            this.otherDirection = false;
+        } else {
+            this.moveRight();
+        }
+    }
 }
