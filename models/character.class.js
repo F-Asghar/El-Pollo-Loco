@@ -56,8 +56,6 @@ export class Character extends MovableObjekt {
         IntervalHub.startInterval(this.startMovement, 1000 / 60);
         IntervalHub.startInterval(this.startAnimation, 100);
         IntervalHub.startInterval(this.getRealFrame, 1000 / 60);
-
-        IntervalHub.startInterval(this.jumpAnimationCheck, 1000 / 40);
     }
 
     /**
@@ -178,12 +176,6 @@ export class Character extends MovableObjekt {
         this.long();
     }
 
-    jumpAnimationCheck = () => {
-        if (!this.isAboveGround()) {
-            this.currentImageOnce = 0;
-        }
-    }
-
     /**
      * Updates the timestamp of the last registered player input to the current time.
      * This resets the idle timer for the character.
@@ -214,6 +206,7 @@ export class Character extends MovableObjekt {
      * @requires SoundHub
      */
     jump() {
+        this.currentImageOnce = 0;
         this.speedY = 30;
         SoundHub.playOne(SoundHub.pepeJump);
         SoundHub.stopOne(SoundHub.pepeSleep);

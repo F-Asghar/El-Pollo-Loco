@@ -172,6 +172,7 @@ export class World {
         this.throwableObjects.push(bottle);
     }
 
+    // #region safe collision
     /**
      * Loops through all level enemies to check for standard horizontal collisions
      * where the character takes damage.
@@ -211,6 +212,9 @@ export class World {
             }
         });
     }
+
+    // #endregion safe collision
+
 
     /**
      * Loops through all enemies and active throwable bottles to check for impacts.
@@ -303,7 +307,6 @@ export class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.botle);
-        this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.coinsBar);
         this.addToMap(this.statusBar);

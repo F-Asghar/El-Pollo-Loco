@@ -1,5 +1,6 @@
 import { BackgroundObject } from "../models/background-object.class.js";
 import { Chicken } from "../models/chicken.class.js";
+import { ChickenSmall } from "../models/chickenSmall.class.js";
 import { Cloud } from "../models/cloud.class.js";
 import { CollectableBotle } from "../models/collectable-botle.class.js";
 import { CollectableCoins } from "../models/collectable-coins.class.js";
@@ -26,8 +27,12 @@ export let level1;
 export function initLevel() {
     level1 = new Level(
         [
-            new Chicken(),
-            new Chicken(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
+            new ChickenSmall(),
             new Chicken(),
             new Chicken(),
             new Chicken(),
