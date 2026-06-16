@@ -286,10 +286,10 @@ export class Character extends MovableObjekt {
             Character.alive &&
             localStorage.getItem("isMuted") !== "true"
         ) {
-            SoundHub.pepeWalk.play();
+            SoundHub.playOne(SoundHub.pepeWalk);
             SoundHub.stopOne(SoundHub.pepeSleep);
         } else if (!isMoving) {
-            SoundHub.pepeWalk.pause();
+            SoundHub.stopOne(SoundHub.pepeWalk);
         }
     };
 }

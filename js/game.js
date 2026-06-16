@@ -7,7 +7,7 @@ import { SoundHub } from "../models/soundHub.class.js";
 import { World } from "../models/world.class.js";
 import {
     getPrivacyPolicyTemplate,
-    getImprintTemplate,
+    getLegalTemplate,
     getControlTemplate,
     getRestartTemplate,
 } from "./template.js";
@@ -102,7 +102,7 @@ function openDialog(id) {
     openDialogRef.showModal();
     if (id == "information-dialog") {
         const dataRef = document.getElementById("information-dialog");
-        dataRef.innerHTML += getImprintTemplate() + getPrivacyPolicyTemplate();
+        dataRef.innerHTML += getLegalTemplate() + getPrivacyPolicyTemplate();
     } else if (id == "controls-dialog") {
         const dataRef2 = document.getElementById(id);
         dataRef2.innerHTML += getControlTemplate();

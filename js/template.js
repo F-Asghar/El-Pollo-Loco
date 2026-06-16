@@ -36,7 +36,7 @@ export function getRestartTemplate() {
             </div>`;
 }
 
-export function getImprintTemplate() {
+export function getLegalTemplate() {
     return `<div id="close-container">
             <button
             onclick="closeDialog('information-dialog')"
@@ -50,7 +50,7 @@ export function getImprintTemplate() {
                 This is a non-commercial, purely private
                 website created exclusively for training and
                 educational purposes.
-                <h2>Responsible according to § 5 TMG</h2>
+                <h3>Responsible according to § 5 TMG</h3>
             <p>
                 Fiarazz Asghar<br />
                 Auf der Steige 15<br />

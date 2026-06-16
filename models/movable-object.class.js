@@ -81,7 +81,7 @@ export class MovableObjekt extends DrawableObject {
         if (enemy && enemy.constructor.name === "Endboss") {
             this.energy -= 1;
         } else {
-            this.energy -= 2;
+            this.energy -= 1;
         }
         if (this.energy < 0) {
             this.energy = 0;

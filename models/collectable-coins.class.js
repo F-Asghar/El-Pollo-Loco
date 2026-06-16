@@ -3,7 +3,7 @@ import { ImageHub } from "./imageHub.class.js";
 import { IntervalHub } from "./intervalHub.class.js";
 
 export class CollectableCoins extends CollectableObjekts {
-    x = 100 + Math.random() * 3600;
+    x = 100 + Math.random() * 3000;
     y = 100 + Math.random() * 200;
     height = 100;
     width = 100;

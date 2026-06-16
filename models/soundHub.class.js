@@ -58,8 +58,12 @@ export class SoundHub {
     static handleVolume() {
         localStorage.setItem("isMuted", "false");
         SoundHub.allSounds.forEach((sound) => {
+            console.log(sound);
             if (sound === SoundHub.backgroundMusik) {
-                sound.volume = 0.03;
+                sound.volume = 0.02;
+            } else if (sound === SoundHub.pepeWalk) {
+                sound.volume = 0.18;
+                console.log(sound.volume);
             } else if (sound === SoundHub.endBoss) {
                 sound.volume = 1;
             } else {
@@ -69,10 +73,10 @@ export class SoundHub {
         SoundHub.updateVolumeIcons();
     }
 
-static updateVolumeIcons() {
+    static updateVolumeIcons() {
         const muteRef = document.getElementById("mute-button");
         const volumeRef = document.getElementById("volume-button");
-        if (!muteRef || !volumeRef) return; 
+        if (!muteRef || !volumeRef) return;
         if (localStorage.getItem("isMuted") === "true") {
             muteRef.style.display = "none";
             volumeRef.style.display = "block";
@@ -85,39 +89,15 @@ static updateVolumeIcons() {
     static setVolume(sound) {
         if (localStorage.getItem("isMuted") !== "true") {
             if (sound === SoundHub.backgroundMusik) {
-                sound.volume = 0.03;
+                sound.volume = 0.02;
+            } else if (sound === SoundHub.pepeWalk) {
+                sound.volume = 0.18;
+                console.log(sound.volume);
             } else if (sound === SoundHub.endBoss) {
                 sound.volume = 1;
             } else {
                 sound.volume = 0.2;
             }
-        } else {
-            sound.volume = 0.0;
-        }
+        } 
     }
-
-    // #region test
-
-    // #endregion
-
-    // #region save
-    // /**
-    //  * Restores volume for all tracked audio instances if audio was disabled.
-    //  */
-    // static playAll() {
-    //     if (!SoundHub.playing) {
-    //         SoundHub.playing = true;
-    //         SoundHub.muted = false;
-    //         SoundHub.allSounds.forEach((sound) => {
-    //             if (sound === SoundHub.backgroundMusik) {
-    //                 sound.volume = 0.03;
-    //             } else {
-    //                 sound.volume = 0.2;
-    //             }
-    //             sound.play();
-    //         });
-    //     }
-    // }
-
-    // #endregion
 }

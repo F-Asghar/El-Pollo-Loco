@@ -48,7 +48,7 @@ export class Chicken extends MovableObjekt {
 
     /**
      * Randomly alters the movement speed of the object within a specific range.
-     * Does nothing if the object is dead. There is a 2% chance per frame 
+     * Does nothing if the object is dead. There is a 2% chance per frame
      * to recalculate the speed between 4 and 12.
      */
     changeSpeed = () => {
@@ -67,7 +67,7 @@ export class Chicken extends MovableObjekt {
         if (this.isDead()) {
             this.playAnimation(ImageHub.chickenNormal.dead);
             this.height = 50;
-            this.y = 385;
+            this.y = 400;
         } else {
             this.playAnimation(ImageHub.chickenNormal.walk);
         }
@@ -92,13 +92,15 @@ export class Chicken extends MovableObjekt {
      * Inside the boundaries, there is a 0.5% chance per frame to randomly change direction.
      */
     changeDirection = () => {
-        if (this.x <= 30) {
-            this.otherDirection = true;
-        } else if (this.x >= 3600) {
-            this.otherDirection = false;
-        } else {
-            if (Math.random() < 0.005) {
-                this.otherDirection = !this.otherDirection;
+        if (!this.isDead()) {
+            if (this.x <= 30) {
+                this.otherDirection = true;
+            } else if (this.x >= 3600) {
+                this.otherDirection = false;
+            } else {
+                if (Math.random() < 0.005) {
+                    this.otherDirection = !this.otherDirection;
+                }
             }
         }
     };
