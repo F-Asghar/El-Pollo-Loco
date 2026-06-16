@@ -23,6 +23,7 @@ window.mute = mute;
 window.volume = volume;
 window.finished = finished;
 window.home = home;
+window.toggleControlButtons = toggleControlButtons;
 
 /**
  * Initializes the main game components by capturing the canvas element,
@@ -139,6 +140,17 @@ function mute() {
  */
 function volume() {
     SoundHub.handleVolume();
+}
+
+
+function toggleControlButtons(){
+    const showControlButtons = document.getElementById("controller");
+    const controlButtons = document.getElementById("control-buttons");
+    if(controlButtons.style.display === "flex"){
+        controlButtons.style.display = "none"
+    } else {
+       controlButtons.style.display = "flex" 
+    }
 }
 
 

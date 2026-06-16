@@ -98,6 +98,8 @@ export class SoundHub {
             } else {
                 sound.volume = 0.2;
             }
-        } 
+        } else {
+            sound.volume = 0.0;
+        }
     }
 }

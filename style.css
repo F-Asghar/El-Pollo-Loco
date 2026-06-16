@@ -144,8 +144,8 @@ canvas {
 
 .home-buttons {
     display: flex;
-    width: clamp(40px, 10vw, 100px);
-    height: clamp(40px, 10vw, 100px);
+    width: 100px;
+    height: 100px;
 
     &:hover {
         cursor: pointer;
@@ -295,6 +295,10 @@ li {
 
     #control-buttons {
         display: flex;
+    }
+
+    #controller{
+        display: none;
     }
 
     #fullscreenBtn {
