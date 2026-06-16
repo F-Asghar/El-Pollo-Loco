@@ -1,6 +1,4 @@
 export class SoundHub {
-    static muted = false;
-
     //#region sounds
 
     static pepeWalk = new Audio("./sounds/character/characterRun.mp3");
@@ -27,6 +25,13 @@ export class SoundHub {
 
     static allSounds = [];
 
+    /**
+     * Plays a sound.
+     * Sets the correct volume, resets the playback position,
+     * and starts playing the audio.
+     *
+     * @param {HTMLAudioElement} sound - The audio element to play.
+     */
     static playOne(sound) {
         SoundHub.setVolume(sound);
         sound.currentTime = 0;
@@ -34,6 +39,10 @@ export class SoundHub {
         sound.play();
     }
 
+    /**
+     * Stops and resets all registered sounds.
+     * Also stops the background music and clears the sound list.
+     */
     static resetSound() {
         SoundHub.stopOne(SoundHub.backgroundMusik);
         SoundHub.allSounds.forEach((sound) => {
@@ -43,10 +52,20 @@ export class SoundHub {
         SoundHub.allSounds = [];
     }
 
+    /**
+     * Stops a single sound.
+     *
+     * @param {HTMLAudioElement} sound - The audio element to stop.
+     */
     static stopOne(sound) {
         sound.pause();
     }
 
+    /**
+     * Enables mute mode.
+     * Sets the volume of all registered sounds to zero
+     * and stores the setting in local storage.
+     */
     static handleMute() {
         localStorage.setItem("isMuted", "true");
         SoundHub.allSounds.forEach((sound) => {
@@ -55,6 +74,11 @@ export class SoundHub {
         SoundHub.updateVolumeIcons();
     }
 
+    /**
+     * Disables mute mode.
+     * Restores the volume of all registered sounds
+     * based on their sound category.
+     */
     static handleVolume() {
         localStorage.setItem("isMuted", "false");
         SoundHub.allSounds.forEach((sound) => {
@@ -73,6 +97,10 @@ export class SoundHub {
         SoundHub.updateVolumeIcons();
     }
 
+    /**
+     * Updates the visibility of the mute and volume buttons
+     * according to the current mute state.
+     */
     static updateVolumeIcons() {
         const muteRef = document.getElementById("mute-button");
         const volumeRef = document.getElementById("volume-button");
@@ -86,6 +114,12 @@ export class SoundHub {
         }
     }
 
+    /**
+     * Sets the volume of a sound based on
+     * the current audio settings.
+     *
+     * @param {HTMLAudioElement} sound - The audio element whose volume should be set.
+     */
     static setVolume(sound) {
         if (localStorage.getItem("isMuted") !== "true") {
             if (sound === SoundHub.backgroundMusik) {

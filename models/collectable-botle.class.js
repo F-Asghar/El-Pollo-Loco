@@ -1,9 +1,6 @@
-
 import { CollectableObjekts } from "./collectable-objects.class.js";
 import { ImageHub } from "./imageHub.class.js";
 import { IntervalHub } from "./intervalHub.class.js";
-
-
 
 export class CollectableBotle extends CollectableObjekts{
     x = 100 + Math.random() * 3000;
@@ -28,5 +25,4 @@ export class CollectableBotle extends CollectableObjekts{
         this.getRealFrame();
         IntervalHub.startInterval(this.getRealFrame, 1000/60);
     }
-
 }

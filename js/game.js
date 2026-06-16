@@ -58,7 +58,6 @@ function startGame() {
     SoundHub.playOne(SoundHub.backgroundMusik);
 }
 
-
 /**
  * Checks if the game has concluded (either the player or the endboss is dead).
  * If the game is over, it waits 2 seconds before resetting character states,
@@ -125,7 +124,7 @@ function closeDialog(id) {
 }
 
 /**
- * Mutes all game audio tracks and toggles the visible control buttons 
+ * Mutes all game audio tracks and toggles the visible control buttons
  * to show the volume icon instead of the mute icon.
  * * @requires SoundHub
  */
@@ -133,8 +132,8 @@ function mute() {
     SoundHub.handleMute();
 }
 
-/** 
- * Unmutes/plays all game audio tracks and toggles the visible control buttons 
+/**
+ * Unmutes/plays all game audio tracks and toggles the visible control buttons
  * to show the mute icon instead of the volume icon.
  * * @requires SoundHub
  */
@@ -142,17 +141,15 @@ function volume() {
     SoundHub.handleVolume();
 }
 
-
-function toggleControlButtons(){
+function toggleControlButtons() {
     const showControlButtons = document.getElementById("controller");
     const controlButtons = document.getElementById("control-buttons");
-    if(controlButtons.style.display === "flex"){
-        controlButtons.style.display = "none"
+    if (controlButtons.style.display === "flex") {
+        controlButtons.style.display = "none";
     } else {
-       controlButtons.style.display = "flex" 
+        controlButtons.style.display = "flex";
     }
 }
-
 
 /**
  * Requests to trigger fullscreen mode specifically for the game canvas element.
@@ -163,7 +160,7 @@ function fullscreen() {
 }
 
 /**
- * Cross-browser helper function that requests the browser to display 
+ * Cross-browser helper function that requests the browser to display
  * a given HTML element in full-screen mode.
  * * @param {HTMLElement} element - The DOM element to be scaled to full screen.
  */
@@ -176,7 +173,6 @@ function enterFullscreen(element) {
         element.webkitRequestFullscreen();
     }
 }
-
 
 /**
  * Initial check of the screen size upon script loading.
@@ -197,13 +193,11 @@ window.addEventListener("resize", checkScreenSize);
 function checkScreenSize() {
     const lockScreen = document.getElementById("lock-screen");
     const isLandscape = window.innerWidth > window.innerHeight;
-    
     if (window.innerWidth < 725 && !isLandscape) {
-        lockScreen.style.display = "flex"; 
+        lockScreen.style.display = "flex";
         lockScreen.showModal();
     } else {
-        lockScreen.style.display = "none"; 
+        lockScreen.style.display = "none";
         lockScreen.close();
     }
 }
-

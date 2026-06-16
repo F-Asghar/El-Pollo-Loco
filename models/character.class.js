@@ -134,7 +134,8 @@ export class Character extends MovableObjekt {
             this.isHurt() ||
             Keyboard.RIGHT ||
             Keyboard.LEFT
-        ) { this.handleActiveAnimations();
+        ) {
+            this.handleActiveAnimations();
         } else if (this.isWaitingLong()) {
             this.playAnimation(ImageHub.pepe.long);
         } else {

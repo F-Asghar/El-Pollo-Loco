@@ -18,13 +18,13 @@ export class CoinsBar extends StatusBar {
     /**
      * Updates the current amount of collected coins, resolves the corresponding
      * status bar image index, and updates the active image from the cache.
-     * * @param {number} piece - The new amount/count of coins to be set.
+     * * @param {number} pice - The new amount/count of coins to be set.
      * @global
      * @requires CoinsBar
      * @requires ImageHub
      */
-    setPice(piece) {
-        CoinsBar.piece = piece;
+    setPice(pice) {
+        CoinsBar.pice = pice;
         let path = ImageHub.statusBar.coins[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
@@ -37,15 +37,15 @@ export class CoinsBar extends StatusBar {
      * @requires CoinsBar
      */
     resolveImageIndex() {
-        if (CoinsBar.piece >= 20) {
+        if (CoinsBar.pice >= 20) {
             return 5;
-        } else if (CoinsBar.piece >= 16) {
+        } else if (CoinsBar.pice >= 16) {
             return 4;
-        } else if (CoinsBar.piece >= 12) {
+        } else if (CoinsBar.pice >= 12) {
             return 3;
-        } else if (CoinsBar.piece >= 8) {
+        } else if (CoinsBar.pice >= 8) {
             return 2;
-        } else if (CoinsBar.piece >= 4) {
+        } else if (CoinsBar.pice >= 4) {
             return 1;
         } else {
             return 0;

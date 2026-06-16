@@ -160,8 +160,7 @@ export class MovableObjekt extends DrawableObject {
         if (this.currentImageOnce < images.length) {
             const path = images[this.currentImageOnce];
             this.img = this.imageCache[path];
-            this.currentImageOnce++;              
+            this.currentImageOnce++;
         }
     }
-
 }
