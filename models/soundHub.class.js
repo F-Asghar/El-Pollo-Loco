@@ -82,12 +82,10 @@ export class SoundHub {
     static handleVolume() {
         localStorage.setItem("isMuted", "false");
         SoundHub.allSounds.forEach((sound) => {
-            console.log(sound);
             if (sound === SoundHub.backgroundMusik) {
                 sound.volume = 0.02;
             } else if (sound === SoundHub.pepeWalk) {
                 sound.volume = 0.18;
-                console.log(sound.volume);
             } else if (sound === SoundHub.endBoss) {
                 sound.volume = 1;
             } else {
@@ -126,7 +124,6 @@ export class SoundHub {
                 sound.volume = 0.02;
             } else if (sound === SoundHub.pepeWalk) {
                 sound.volume = 0.18;
-                console.log(sound.volume);
             } else if (sound === SoundHub.endBoss) {
                 sound.volume = 1;
             } else {
